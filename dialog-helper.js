@@ -1,6 +1,6 @@
 const dialogs = {};
 
-class dialogHelper {
+class DialogHelper {
     /**
      * A callback that gets triggered before the dialog gets shown, but after all contents got generated. You can – e.g., – manually adjust things here.
      * @callback onBeforeShowCallback
@@ -20,7 +20,7 @@ class dialogHelper {
     /**
      * A content element of the dialog
      * @typedef {Object} contentElement
-     * @property {HEADER | TEXT_INPUT | DESCRIPTION | SELECT | TEXT_AREA | HR | NUMBER_INPUT | CHECKBOX} type The type of the element
+     * @property {HEADER | TEXT_INPUT | SLIDER | DESCRIPTION | SELECT | TEXT_AREA | HR | NUMBER_INPUT | CHECKBOX} type The type of the element
      * @property {string} id The unique identifier of the element (will get used in the results object of the modal)
      * @property {Array<{value:string, label:string}>} [options] The options that can get chosen by the user (**only** relevant for type`dialogHelper.SELECT`)
      * @property {string} [label=id] The label of the element (i.e., e.g., explanatory text or the text itself for headlines and descriptions)
@@ -50,7 +50,11 @@ class dialogHelper {
         // fill the dialog with contents
         const form = document.createElement('form');
 
-        const elements = dialogHelper.parseElements(contents);
+        const titleElement = document.createElement('h1');
+        titleElement.innerHTML = title;
+        form.appendChild(titleElement);
+
+        const elements = DialogHelper.parseElements(contents);
 
         for (let key in elements) {
             if (elements.hasOwnProperty(key))
@@ -128,6 +132,9 @@ class dialogHelper {
                 case this.SELECT:
                     elementsObject[element.id] = this.parseSelect(element);
                     break;
+                case this.SLIDER:
+                    elementsObject[element.id] = this.parseSlider(element);
+                    break;
                 case this.CHECKBOX:
                     elementsObject[element.id] = this.parseCheckbox(element);
                     break;
@@ -148,17 +155,18 @@ class dialogHelper {
      * @return {{wrapper: HTMLElement}}
      */
     static parseHeader(contentElement) {
-        const heading = document.createElement('h2');
-        heading.innerHTML = contentElement.label;
+        const header = document.createElement('h2');
+        header.innerHTML = contentElement.label;
         if (contentElement.htmlAttributes) {
             for (let name in contentElement.htmlAttributes) {
-                heading.setAttribute(name, contentElement.htmlAttributes[name]);
+                header.setAttribute(name, contentElement.htmlAttributes[name]);
             }
         }
-        heading.id = contentElement.id;
+        header.id = contentElement.id;
 
-        return {wrapper: heading};
+        return {wrapper: header};
     }
+
     /**
      * @private
      * @param {contentElement} contentElement
@@ -176,6 +184,7 @@ class dialogHelper {
 
         return {wrapper: paragraph};
     }
+
     /**
      * @private
      * @param {contentElement} contentElement
@@ -192,6 +201,7 @@ class dialogHelper {
 
         return {wrapper: rule};
     }
+
     /**
      * @private
      * @param {contentElement} contentElement
@@ -200,94 +210,125 @@ class dialogHelper {
      */
     static parseInput(contentElement, type) {
 
-        let lblText = document.createElement("label");
-        lblText.id = contentElement.id + '-wrapper';
-        const txtInput = document.createElement('input');
-        txtInput.type = type;
-        txtInput.id = contentElement.id;
-        txtInput.placeholder = contentElement.label;
-        const spanLblCheck = document.createElement('span');
-        spanLblCheck.id = contentElement.id + '-span';
-        spanLblCheck.innerHTML = contentElement.label + '<br>';
-        lblText.appendChild(spanLblCheck);
-        lblText.appendChild(txtInput);
+        let inputWrapper = document.createElement("label");
+        inputWrapper.id = contentElement.id + '-wrapper';
+        const input = document.createElement('input');
+        input.type = type;
+        input.id = contentElement.id;
+        input.placeholder = contentElement.label;
+        const inputLabel = document.createElement('span');
+        inputLabel.id = contentElement.id + '-label';
+        inputLabel.innerHTML = contentElement.label + '<br>';
+        inputWrapper.appendChild(inputLabel);
+        inputWrapper.appendChild(input);
 
         if (contentElement.htmlAttributes) {
             for (let name in contentElement.htmlAttributes) {
-                txtInput.setAttribute(name, contentElement.htmlAttributes[name]);
+                input.setAttribute(name, contentElement.htmlAttributes[name]);
             }
         }
 
-        return {wrapper: lblText, input: textInput};
+        return {wrapper: inputWrapper, input: textInput};
     }
+
+    /**
+     * @private
+     * @param {contentElement} contentElement
+     * @return {{wrapper: HTMLElement, input: HTMLElement}}
+     */
+    static parseSlider(contentElement) {
+
+        let sliderWrapper = document.createElement("label");
+        sliderWrapper.id = contentElement.id + '-wrapper';
+        const slider = document.createElement('input');
+        slider.type = 'range';
+        slider.id = contentElement.id;
+        slider.placeholder = contentElement.label;
+        const sliderLabel = document.createElement('span');
+        sliderLabel.id = contentElement.id + '-span';
+        sliderLabel.innerHTML = contentElement.label + '<br>';
+        sliderWrapper.appendChild(sliderLabel);
+        sliderWrapper.appendChild(slider);
+
+        if (contentElement.htmlAttributes) {
+            for (let name in contentElement.htmlAttributes) {
+                slider.setAttribute(name, contentElement.htmlAttributes[name]);
+            }
+        }
+
+        return {wrapper: sliderWrapper, input: textInput};
+    }
+
     /**
      * @private
      * @param {contentElement} contentElement
      * @return {{wrapper: HTMLElement, input: HTMLElement}}
      */
     static parseTextarea(contentElement) {
-        let lblText = document.createElement("label");
-        lblText.id = contentElement.id + '-wrapper';
-        const txtInput = document.createElement('textarea');
-        txtInput.id = contentElement.id;
-        txtInput.placeholder = contentElement.label;
-        const spanLblCheck = document.createElement('span');
-        spanLblCheck.id = contentElement.id + '-span';
-        spanLblCheck.innerHTML = contentElement.label + '<br>';
-        lblText.appendChild(spanLblCheck);
-        lblText.appendChild(txtInput);
+        let textareaWrapper = document.createElement("label");
+        textareaWrapper.id = contentElement.id + '-wrapper';
+        const textarea = document.createElement('textarea');
+        textarea.id = contentElement.id;
+        textarea.placeholder = contentElement.label;
+        const textareLabel = document.createElement('span');
+        textareLabel.id = contentElement.id + '-label';
+        textareLabel.innerHTML = contentElement.label + '<br>';
+        textareaWrapper.appendChild(textareLabel);
+        textareaWrapper.appendChild(textarea);
 
 
         if (contentElement.htmlAttributes) {
             for (let name in contentElement.htmlAttributes) {
-                txtInput.setAttribute(name, contentElement.htmlAttributes[name]);
+                textarea.setAttribute(name, contentElement.htmlAttributes[name]);
             }
         }
 
-        return {wrapper: lblText, input: textArea};
+        return {wrapper: textareaWrapper, input: textArea};
     }
+
     /**
      * @private
      * @param {contentElement} contentElement
      * @return {{wrapper: HTMLElement, input: HTMLElement}}
      */
     static parseCheckbox(contentElement) {
-        const lblCheck = document.createElement("label");
-        lblCheck.id = contentElement.id + '-wrapper';
-        Object.assign(lblCheck.style, {flexDirection: "row", alignItems: "center"});
+        const checkboxWrapper = document.createElement("label");
+        checkboxWrapper.id = contentElement.id + '-wrapper';
+        Object.assign(checkboxWrapper.style, {flexDirection: "row", alignItems: "center"});
 
-        const checkBox = document.createElement('input');
-        checkBox.type = 'checkbox';
-        checkBox.id = contentElement.id;
-        checkBox.placeholder = contentElement.label;
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.id = contentElement.id;
+        checkbox.placeholder = contentElement.label;
 
-        lblCheck.appendChild(checkBox);
-        const spanLblCheck = document.createElement('span');
-        spanLblCheck.id = contentElement.id + '-label';
-        spanLblCheck.innerHTML = label;
-        lblCheck.appendChild(spanLblCheck);
+        checkboxWrapper.appendChild(checkbox);
+        const checkboxLabel = document.createElement('span');
+        checkboxLabel.id = contentElement.id + '-label';
+        checkboxLabel.innerHTML = label;
+        checkboxWrapper.appendChild(checkboxLabel);
 
 
         if (contentElement.htmlAttributes) {
             for (let name in contentElement.htmlAttributes) {
-                checkBox.setAttribute(name, contentElement.htmlAttributes[name]);
+                checkbox.setAttribute(name, contentElement.htmlAttributes[name]);
             }
         }
 
-        return {wrapper: lblCheck, input: checkBox};
+        return {wrapper: checkboxWrapper, input: checkbox};
     }
+
     /**
      * @private
      * @param {contentElement} contentElement
      * @return {{wrapper: HTMLElement, input: HTMLElement}}
      */
     static parseSelect(contentElement) {
-        const lblSelect = document.createElement("label");
-        lblSelect.id = contentElement.id + "-wrapper";
-        const spanLblSelect = document.createElement('span');
-        spanLblSelect.id = contentElement.id + "-label";
-        spanLblSelect.innerHTML = contentElement.label;
-        lblSelect.appendChild(spanLblSelect);
+        const selectWrapper = document.createElement("label");
+        selectWrapper.id = contentElement.id + "-wrapper";
+        const selectLabel = document.createElement('span');
+        selectLabel.id = contentElement.id + "-label";
+        selectLabel.innerHTML = contentElement.label;
+        selectWrapper.appendChild(selectLabel);
         const select = document.createElement('select');
         select.id = contentElement.id;
 
@@ -306,12 +347,10 @@ class dialogHelper {
         if (defaultValue) {
             select.value = defaultValue;
         }
-        lblSelect.appendChild(select);
+        selectWrapper.appendChild(select);
 
-        return {wrapper: lblSelect, input: select};
+        return {wrapper: selectWrapper, input: select};
     }
-
-
 
 
     /**
@@ -350,9 +389,9 @@ class dialogHelper {
     }
 
     /**
-     * A radio button selector
+     * A slider
      */
-    static get RADIO() {
+    static get SLIDER() {
         return 5;
     }
 
@@ -378,4 +417,4 @@ class dialogHelper {
     }
 }
 
-module.exports = dialogHelper;
+module.exports = DialogHelper;
