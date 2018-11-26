@@ -8,7 +8,5 @@ module.exports = {
     devtool: "none",
     externals: {
         uxp: "uxp"
-    },
-    module: {
     }
 };
