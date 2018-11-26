@@ -1,4 +1,4 @@
-const dialogs = {};
+let dialogs = {};
 
 class DialogHelper {
     /**
@@ -22,7 +22,7 @@ class DialogHelper {
      * @typedef {Object} contentElement
      * @property {HEADER | TEXT_INPUT | SLIDER | DESCRIPTION | SELECT | TEXT_AREA | HR | NUMBER_INPUT | CHECKBOX} type The type of the element
      * @property {string} id The unique identifier of the element (will get used in the results object of the modal)
-     * @property {Array<{value:string, label:string}>} [options] The options that can get chosen by the user (**only** relevant for type`dialogHelper.SELECT`)
+     * @property {Array<{value:string, label:string}>} [options] The options that can get chosen by the user (**only** relevant for type`DialogHelper.SELECT`)
      * @property {string} [label=id] The label of the element (i.e., e.g., explanatory text or the text itself for headlines and descriptions)
      * @property {Object} [htmlAttributes={}] Additional HTML attributes for the input field (e.g., `style`, `min` and `max` for numeric input etc.)
      */
@@ -228,7 +228,7 @@ class DialogHelper {
             }
         }
 
-        return {wrapper: inputWrapper, input: textInput};
+        return {wrapper: inputWrapper, input: input};
     }
 
     /**
@@ -343,9 +343,6 @@ class DialogHelper {
             optEntry.value = entry.value;
             optEntry.innerHTML = entry.label;
             select.appendChild(optEntry);
-        }
-        if (defaultValue) {
-            select.value = defaultValue;
         }
         selectWrapper.appendChild(select);
 
