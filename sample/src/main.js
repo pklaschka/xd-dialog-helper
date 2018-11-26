@@ -1,7 +1,7 @@
 const DialogHelper = require('xd-dialog-helper');
 
-async function showModal() {
-    let results = await DialogHelper.showDialog('test', 'Test Plugin', [
+function showModal() {
+    DialogHelper.showDialog('test', 'Test Plugin', [
         {
             type: DialogHelper.DESCRIPTION,
             id: 'moin',
@@ -29,9 +29,8 @@ async function showModal() {
         }
     ], {
         okButtonText: 'Insert',
-    });
+    }).then(results => console.log(JSON.stringify(results)), reason => console.log('Dialog got canceled ' + reason));
 
-    console.log(JSON.stringify(results));
 }
 
 module.exports.commands = {

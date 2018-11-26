@@ -160,8 +160,8 @@ class DialogHelper {
         const footer = document.createElement('footer');
 
         footer.innerHTML = `
-        <button id="dialogHelperBtnOk" uxp-variant="primary">${options.cancelButtonText || 'Cancel'}</button>
-        <button id="dialogHelperBtnCancel" type="submit" uxp-variant="cta">${options.okButtonText || 'Ok'}</button>`;
+        <button id="dialogHelperBtnCancel" uxp-variant="primary">${options.cancelButtonText || 'Cancel'}</button>
+        <button id="dialogHelperBtnOk" type="submit" uxp-variant="cta">${options.okButtonText || 'Ok'}</button>`;
 
         form.appendChild(footer);
         dialog.appendChild(form);
@@ -189,7 +189,7 @@ class DialogHelper {
         form.onsubmit = onsubmit;
 
         const cancelButton = document.querySelector("#dialogHelperBtnCancel");
-        cancelButton.addEventListener("click", () => dialog.close(`Dialog '${id}' got canceled by the user`));
+        cancelButton.addEventListener("click", () => {throw new Error(`Dialog '${id}' got canceled by the user`)});
 
         const okButton = document.querySelector("#dialogHelperBtnOk");
         okButton.addEventListener("click", e => {
@@ -523,8 +523,8 @@ module.exports = DialogHelper;
 
 const DialogHelper = __webpack_require__(/*! xd-dialog-helper */ "../dialog-helper.js");
 
-async function showModal() {
-    let results = await DialogHelper.showDialog('test', 'Test Plugin', [
+function showModal() {
+    DialogHelper.showDialog('test', 'Test Plugin', [
         {
             type: DialogHelper.DESCRIPTION,
             id: 'moin',
@@ -552,9 +552,8 @@ async function showModal() {
         }
     ], {
         okButtonText: 'Insert',
-    });
+    }).then(results => console.log(JSON.stringify(results)), reason => console.log('Dialog got canceled ' + reason));
 
-    console.log(JSON.stringify(results));
 }
 
 module.exports.commands = {

@@ -5,7 +5,7 @@
   "author": "Pablo Klaschka",
   "license": "MIT",
   "dependencies": {
-    "xd-dialog-helper": "../"
+    "xd-dialog-helper": "file:.."
   },
   "devDependencies": {
     "webpack": "^4.21.0",
