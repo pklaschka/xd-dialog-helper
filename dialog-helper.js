@@ -20,9 +20,9 @@ class dialogHelper {
     /**
      * A content element of the dialog
      * @typedef {Object} contentElement
-     * @property {HEADER | RADIO | TEXT_INPUT | DESCRIPTION | SELECT | TEXT_AREA | HR | NUMBER_INPUT} type The type of the element
+     * @property {HEADER | TEXT_INPUT | DESCRIPTION | SELECT | TEXT_AREA | HR | NUMBER_INPUT | CHECKBOX} type The type of the element
      * @property {string} id The unique identifier of the element (will get used in the results object of the modal)
-     * @property {Array<{value:string, label:string}>} [options] The options that can get chosen by the user (**only** relevant for types `dialogHelper.RADIO` and `dialogHelper.SELECT`)
+     * @property {Array<{value:string, label:string}>} [options] The options that can get chosen by the user (**only** relevant for type`dialogHelper.SELECT`)
      * @property {string} [label=id] The label of the element (i.e., e.g., explanatory text or the text itself for headlines and descriptions)
      * @property {Object} [htmlAttributes={}] Additional HTML attributes for the input field (e.g., `style`, `min` and `max` for numeric input etc.)
      */
@@ -54,7 +54,7 @@ class dialogHelper {
 
         for (let key in elements) {
             if (elements.hasOwnProperty(key))
-                form.appendChild(elements[key]);
+                form.appendChild(elements[key].wrapper);
         }
 
         const footer = document.createElement('footer');
@@ -73,10 +73,12 @@ class dialogHelper {
                 if (elements.hasOwnProperty(key)) {
                     const element = elements[key];
 
-                    if (element.value !== undefined) {
-                        returnValue[key] = element.value;
-                    } else if (element.checked !== undefined) {
-                        returnValue[key] = element.checked;
+                    if (element.input) {
+                        if (element.input.value !== undefined) {
+                            returnValue[key] = element.input.value;
+                        } else if (element.input.checked !== undefined) {
+                            returnValue[key] = element.input.checked;
+                        }
                     }
                 }
             }
@@ -96,7 +98,7 @@ class dialogHelper {
         });
 
         if (options.onBeforeShow)
-            options.onBeforeShow(dialog, elements);
+            options.onBeforeShow(dialog, elements.map(value => value.input ? value.input : value.wrapper));
 
         return await dialog.showModal();
     }
@@ -105,11 +107,212 @@ class dialogHelper {
      * Create an object with the content elements in a key-value form (inside an object)
      * @private
      * @param {Array<contentElement>} contents
-     * @return {Object<HTMLElement>} An object containing the elements in key-value form (with the key being the id)
+     * @return {Object<{wrapper:HTMLElement, input: HTMLElement}>} An object containing the elements in key-value form (with the key being the id)
      */
     static parseElements(contents) {
-        return [];
+        let elementsObject = {};
+        for (let element of contents) {
+            switch (element.type) {
+                case this.HEADER:
+                    elementsObject[element.id] = this.parseHeader(element);
+                    break;
+                case this.TEXT_INPUT:
+                    elementsObject[element.id] = this.parseInput(element, 'text');
+                    break;
+                case this.NUMBER_INPUT:
+                    elementsObject[element.id] = this.parseInput(element, 'number');
+                    break;
+                case this.TEXT_AREA:
+                    elementsObject[element.id] = this.parseTextarea(element);
+                    break;
+                case this.SELECT:
+                    elementsObject[element.id] = this.parseSelect(element);
+                    break;
+                case this.CHECKBOX:
+                    elementsObject[element.id] = this.parseCheckbox(element);
+                    break;
+                case this.HR:
+                    elementsObject[element.id] = this.parseHR(element);
+                    break;
+                default:
+                    elementsObject[element.id] = this.parseDescription(element);
+
+            }
+        }
+        return elementsObject;
     }
+
+    /**
+     * @private
+     * @param {contentElement} contentElement
+     * @return {{wrapper: HTMLElement}}
+     */
+    static parseHeader(contentElement) {
+        const heading = document.createElement('h2');
+        heading.innerHTML = contentElement.label;
+        if (contentElement.htmlAttributes) {
+            for (let name in contentElement.htmlAttributes) {
+                heading.setAttribute(name, contentElement.htmlAttributes[name]);
+            }
+        }
+        heading.id = contentElement.id;
+
+        return {wrapper: heading};
+    }
+    /**
+     * @private
+     * @param {contentElement} contentElement
+     * @return {{wrapper: HTMLElement}}
+     */
+    static parseDescription(contentElement) {
+        const paragraph = document.createElement('p');
+        paragraph.innerHTML = contentElement.label;
+        if (contentElement.htmlAttributes) {
+            for (let name in contentElement.htmlAttributes) {
+                paragraph.setAttribute(name, contentElement.htmlAttributes[name]);
+            }
+        }
+        paragraph.id = contentElement.id;
+
+        return {wrapper: paragraph};
+    }
+    /**
+     * @private
+     * @param {contentElement} contentElement
+     * @return {{wrapper: HTMLElement}}
+     */
+    static parseHR(contentElement) {
+        const rule = document.createElement('hr');
+        if (contentElement.htmlAttributes) {
+            for (let name in contentElement.htmlAttributes) {
+                rule.setAttribute(name, contentElement.htmlAttributes[name]);
+            }
+        }
+        rule.id = contentElement.id;
+
+        return {wrapper: rule};
+    }
+    /**
+     * @private
+     * @param {contentElement} contentElement
+     * @param {'text'|'number'} type
+     * @return {{wrapper: HTMLElement, input: HTMLElement}}
+     */
+    static parseInput(contentElement, type) {
+
+        let lblText = document.createElement("label");
+        lblText.id = contentElement.id + '-wrapper';
+        const txtInput = document.createElement('input');
+        txtInput.type = type;
+        txtInput.id = contentElement.id;
+        txtInput.placeholder = contentElement.label;
+        const spanLblCheck = document.createElement('span');
+        spanLblCheck.id = contentElement.id + '-span';
+        spanLblCheck.innerHTML = contentElement.label + '<br>';
+        lblText.appendChild(spanLblCheck);
+        lblText.appendChild(txtInput);
+
+        if (contentElement.htmlAttributes) {
+            for (let name in contentElement.htmlAttributes) {
+                txtInput.setAttribute(name, contentElement.htmlAttributes[name]);
+            }
+        }
+
+        return {wrapper: lblText, input: textInput};
+    }
+    /**
+     * @private
+     * @param {contentElement} contentElement
+     * @return {{wrapper: HTMLElement, input: HTMLElement}}
+     */
+    static parseTextarea(contentElement) {
+        let lblText = document.createElement("label");
+        lblText.id = contentElement.id + '-wrapper';
+        const txtInput = document.createElement('textarea');
+        txtInput.id = contentElement.id;
+        txtInput.placeholder = contentElement.label;
+        const spanLblCheck = document.createElement('span');
+        spanLblCheck.id = contentElement.id + '-span';
+        spanLblCheck.innerHTML = contentElement.label + '<br>';
+        lblText.appendChild(spanLblCheck);
+        lblText.appendChild(txtInput);
+
+
+        if (contentElement.htmlAttributes) {
+            for (let name in contentElement.htmlAttributes) {
+                txtInput.setAttribute(name, contentElement.htmlAttributes[name]);
+            }
+        }
+
+        return {wrapper: lblText, input: textArea};
+    }
+    /**
+     * @private
+     * @param {contentElement} contentElement
+     * @return {{wrapper: HTMLElement, input: HTMLElement}}
+     */
+    static parseCheckbox(contentElement) {
+        const lblCheck = document.createElement("label");
+        lblCheck.id = contentElement.id + '-wrapper';
+        Object.assign(lblCheck.style, {flexDirection: "row", alignItems: "center"});
+
+        const checkBox = document.createElement('input');
+        checkBox.type = 'checkbox';
+        checkBox.id = contentElement.id;
+        checkBox.placeholder = contentElement.label;
+
+        lblCheck.appendChild(checkBox);
+        const spanLblCheck = document.createElement('span');
+        spanLblCheck.id = contentElement.id + '-label';
+        spanLblCheck.innerHTML = label;
+        lblCheck.appendChild(spanLblCheck);
+
+
+        if (contentElement.htmlAttributes) {
+            for (let name in contentElement.htmlAttributes) {
+                checkBox.setAttribute(name, contentElement.htmlAttributes[name]);
+            }
+        }
+
+        return {wrapper: lblCheck, input: checkBox};
+    }
+    /**
+     * @private
+     * @param {contentElement} contentElement
+     * @return {{wrapper: HTMLElement, input: HTMLElement}}
+     */
+    static parseSelect(contentElement) {
+        const lblSelect = document.createElement("label");
+        lblSelect.id = contentElement.id + "-wrapper";
+        const spanLblSelect = document.createElement('span');
+        spanLblSelect.id = contentElement.id + "-label";
+        spanLblSelect.innerHTML = contentElement.label;
+        lblSelect.appendChild(spanLblSelect);
+        const select = document.createElement('select');
+        select.id = contentElement.id;
+
+        if (contentElement.htmlAttributes) {
+            for (let name in contentElement.htmlAttributes) {
+                select.setAttribute(name, contentElement.htmlAttributes[name]);
+            }
+        }
+
+        for (let entry of contentElement.options) {
+            let optEntry = document.createElement("option");
+            optEntry.value = entry.value;
+            optEntry.innerHTML = entry.label;
+            select.appendChild(optEntry);
+        }
+        if (defaultValue) {
+            select.value = defaultValue;
+        }
+        lblSelect.appendChild(select);
+
+        return {wrapper: lblSelect, input: select};
+    }
+
+
+
 
     /**
      * A headline
@@ -165,6 +368,13 @@ class dialogHelper {
      */
     static get HR() {
         return 7;
+    }
+
+    /**
+     * A checkbox
+     */
+    static get CHECKBOX() {
+        return 8;
     }
 }
 
