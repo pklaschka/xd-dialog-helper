@@ -128,79 +128,86 @@ class DialogHelper {
      * @param {string} id The dialogs name / unique identifier
      * @param {string} title The title that gets displayed in the dialog
      * @param {Array<contentElement>} contents The contents of the dialog
-     * @param {dialogOptions} options
-     * @return {Promise<object>}
+     * @param {dialogOptions} options Additional options for the dialog
+     * @return {Promise<object>} Promise, which resolves with the form values or rejects if the dialog gets canceled
      */
-    static async showDialog(id, title, contents, options) {
-        let dialog;
-        if (!dialogs[id]) {
-            // Generate the dialog
-            dialog = document.createElement('dialog');
-            dialog.id = id;
-            dialogs[id] = dialog;
-        } else {
-            dialog = dialogs[id];
-            dialog.innerHTML = ''; // Empty the dialog
-        }
+    static showDialog(id, title, contents, options) {
+        return new Promise(async (resolve, reject) => {
+            let dialog;
+            if (!dialogs[id]) {
+                // Generate the dialog
+                dialog = document.createElement('dialog');
+                dialog.id = id;
+                dialogs[id] = dialog;
+            } else {
+                dialog = dialogs[id];
+                dialog.innerHTML = ''; // Empty the dialog
+            }
 
-        // fill the dialog with contents
-        const form = document.createElement('form');
+            // fill the dialog with contents
+            const form = document.createElement('form');
 
-        const titleElement = document.createElement('h1');
-        titleElement.innerHTML = title;
-        form.appendChild(titleElement);
+            const titleElement = document.createElement('h1');
+            titleElement.innerHTML = title;
+            form.appendChild(titleElement);
 
-        const elements = DialogHelper.parseElements(contents);
+            const elements = DialogHelper.parseElements(contents);
 
-        for (let key in elements) {
-            if (elements.hasOwnProperty(key))
-                form.appendChild(elements[key].wrapper);
-        }
+            for (let key in elements) {
+                if (elements.hasOwnProperty(key))
+                    form.appendChild(elements[key].wrapper);
+            }
 
-        const footer = document.createElement('footer');
+            const footer = document.createElement('footer');
 
-        footer.innerHTML = `
+            footer.innerHTML = `
         <button id="dialogHelperBtnCancel" uxp-variant="primary">${options.cancelButtonText || 'Cancel'}</button>
         <button id="dialogHelperBtnOk" type="submit" uxp-variant="cta">${options.okButtonText || 'Ok'}</button>`;
 
-        form.appendChild(footer);
-        dialog.appendChild(form);
-        document.body.appendChild(dialog);
+            form.appendChild(footer);
+            dialog.appendChild(form);
+            document.body.appendChild(dialog);
 
-        function onsubmit() {
-            let returnValue = {};
-            for (let key in elements) {
-                if (elements.hasOwnProperty(key)) {
-                    const element = elements[key];
+            function onsubmit() {
+                let returnValue = {};
+                for (let key in elements) {
+                    if (elements.hasOwnProperty(key)) {
+                        const element = elements[key];
 
-                    if (element.input) {
-                        if (element.input.value !== undefined) {
-                            returnValue[key] = element.input.value;
-                        } else if (element.input.checked !== undefined) {
-                            returnValue[key] = element.input.checked;
+                        if (element.input) {
+                            if (element.input.value !== undefined) {
+                                returnValue[key] = element.input.value;
+                            } else if (element.input.checked !== undefined) {
+                                returnValue[key] = element.input.checked;
+                            }
                         }
                     }
                 }
+
+                dialog.close(returnValue);
             }
 
-            dialog.close(returnValue);
-        }
+            form.onsubmit = onsubmit;
 
-        form.onsubmit = onsubmit;
+            const cancelButton = document.querySelector("#dialogHelperBtnCancel");
+            cancelButton.addEventListener("click", () => dialog.close('cancel'));
 
-        const cancelButton = document.querySelector("#dialogHelperBtnCancel");
-        cancelButton.addEventListener("click", () => {throw new Error(`Dialog '${id}' got canceled by the user`)});
+            const okButton = document.querySelector("#dialogHelperBtnOk");
+            okButton.addEventListener("click", e => {
+                onsubmit();
+                e.preventDefault();
+            });
 
-        const okButton = document.querySelector("#dialogHelperBtnOk");
-        okButton.addEventListener("click", e => {
-            onsubmit();
-            e.preventDefault();
+            if (options.onBeforeShow)
+                options.onBeforeShow(dialog, elements.map(value => value.input ? value.input : value.wrapper));
+
+            const result = await dialog.showModal();
+            if (result !== 'cancel') {
+                resolve(result);
+            } else {
+                reject(`Dialog '${id}' got canceled by the user`);
+            }
         });
-
-        if (options.onBeforeShow)
-            options.onBeforeShow(dialog, elements.map(value => value.input ? value.input : value.wrapper));
-
-        return await dialog.showModal();
     }
 
     /**
