@@ -64,8 +64,8 @@ class DialogHelper {
         const footer = document.createElement('footer');
 
         footer.innerHTML = `
-        <button id="dialogHelperBtnOk" uxp-variant="primary">${options.cancelButtonText || 'Cancel'}</button>
-        <button id="dialogHelperBtnCancel" type="submit" uxp-variant="cta">${options.okButtonText || 'Ok'}</button>`;
+        <button id="dialogHelperBtnCancel" uxp-variant="primary">${options.cancelButtonText || 'Cancel'}</button>
+        <button id="dialogHelperBtnOk" type="submit" uxp-variant="cta">${options.okButtonText || 'Ok'}</button>`;
 
         form.appendChild(footer);
         dialog.appendChild(form);
