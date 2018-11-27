@@ -130,9 +130,9 @@ class DialogHelper {
                 case this.TEXT_INPUT:
                     elementsObject[element.id] = this.parseInput(element, 'text');
                     break;
-                case this.NUMBER_INPUT:
+                /*case this.NUMBER_INPUT:
                     elementsObject[element.id] = this.parseInput(element, 'number');
-                    break;
+                    break;*/
                 case this.TEXT_AREA:
                     elementsObject[element.id] = this.parseTextarea(element);
                     break;
@@ -402,9 +402,9 @@ class DialogHelper {
     /**
      * An input for numeric values
      */
-    static get NUMBER_INPUT() {
+    /*static get NUMBER_INPUT() {
         return 6;
-    }
+    }*/
 
     /**
      * A horizontal ruler (`<hr>`)
