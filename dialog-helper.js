@@ -217,7 +217,6 @@ class DialogHelper {
      * @return {{wrapper: HTMLElement, input: HTMLElement}}
      */
     static parseInput(contentElement, type) {
-
         let inputWrapper = document.createElement("label");
         inputWrapper.id = contentElement.id + '-wrapper';
         const input = document.createElement('input');
@@ -242,11 +241,16 @@ class DialogHelper {
     /**
      * @private
      * @param {contentElement} contentElement
-     * @return {{wrapper: HTMLElement, input: HTMLElement}}
+     * @return {{wrapper: HTMLElement, input: HTMLElement} | null}
      */
     static parseSlider(contentElement) {
-        const labelWrapper = document.createElement("label");
-        labelWrapper.id = contentElement.id + '-wrapper';
+        if (!contentElement.htmlAttributes || !contentElement.htmlAttributes.value || !contentElement.htmlAttributes.min || !contentElement.htmlAttributes.max) {
+            console.error('A slider must have a min, max and value parameter speciefied in its `htmlAttributes`.');
+            return null;
+        }
+
+        const sliderWrapper = document.createElement("label");
+        sliderWrapper.id = contentElement.id + '-wrapper';
 
         const label = document.createElement("span");
         label.textContent = contentElement.label;
@@ -254,10 +258,7 @@ class DialogHelper {
 
         const displayValue = document.createElement("span");
         displayValue.id = contentElement.id + '-value-label';
-        displayValue.textContent =
-            (contentElement.htmlAttributes && contentElement.htmlAttributes.value !== undefined)
-                ? contentElement.htmlAttributes.value : '50'
-            + (contentElement.unit || '');
+        displayValue.textContent = contentElement.htmlAttributes.value + (contentElement.unit || '');
 
         const labelAndDisplay = document.createElement("div");
         labelAndDisplay.className = "row";
@@ -268,23 +269,21 @@ class DialogHelper {
         const slider = document.createElement("input");
         slider.id = contentElement.id;
         slider.setAttribute("type", "range");
-        slider.setAttribute("min", "0");
-        slider.setAttribute("max", "100");
-        slider.setAttribute("value", "50");
 
         slider.addEventListener('change',
             () => displayValue.textContent = Math.round(slider.value) + (contentElement.unit || ''));
 
-        labelWrapper.appendChild(labelAndDisplay);
-        labelWrapper.appendChild(slider);
+        sliderWrapper.appendChild(labelAndDisplay);
+        sliderWrapper.appendChild(slider);
 
         if (contentElement.htmlAttributes) {
             for (let name in contentElement.htmlAttributes) {
-                slider.setAttribute(name, contentElement.htmlAttributes[name]);
+                if (contentElement.htmlAttributes.hasOwnProperty(name))
+                    slider.setAttribute(name, contentElement.htmlAttributes[name]);
             }
         }
 
-        return {wrapper: labelWrapper, input: slider}
+        return {wrapper: sliderWrapper, input: slider}
     }
 
     /**

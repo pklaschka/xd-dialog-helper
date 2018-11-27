@@ -313,7 +313,6 @@ class DialogHelper {
      * @return {{wrapper: HTMLElement, input: HTMLElement}}
      */
     static parseInput(contentElement, type) {
-
         let inputWrapper = document.createElement("label");
         inputWrapper.id = contentElement.id + '-wrapper';
         const input = document.createElement('input');
@@ -338,37 +337,24 @@ class DialogHelper {
     /**
      * @private
      * @param {contentElement} contentElement
-     * @return {{wrapper: HTMLElement, input: HTMLElement}}
+     * @return {{wrapper: HTMLElement, input: HTMLElement} | null}
      */
     static parseSlider(contentElement) {
-        /*
-        let sliderWrapper = document.createElement("label");
-        sliderWrapper.id = contentElement.id + '-wrapper';
-        const slider = document.createElement('input');
-        slider.type = 'range';
-        slider.id = contentElement.id;
-        slider.placeholder = contentElement.label;
-        const sliderLabel = document.createElement('span');
-        sliderLabel.id = contentElement.id + '-span';
-        sliderLabel.innerHTML = contentElement.label + '<br>';
-        sliderWrapper.appendChild(sliderLabel);
-        sliderWrapper.appendChild(slider);
-
-        if (contentElement.htmlAttributes) {
-            for (let name in contentElement.htmlAttributes) {
-                slider.setAttribute(name, contentElement.htmlAttributes[name]);
-            }
+        if (!contentElement.htmlAttributes || !contentElement.htmlAttributes.value || !contentElement.htmlAttributes.min || !contentElement.htmlAttributes.max) {
+            console.error('A slider must have a min, max and value parameter speciefied in its `htmlAttributes`.');
+            return null;
         }
 
-        return {wrapper: sliderWrapper, input: slider};*/
-
-        const labelWrapper = document.createElement("label");
+        const sliderWrapper = document.createElement("label");
+        sliderWrapper.id = contentElement.id + '-wrapper';
 
         const label = document.createElement("span");
         label.textContent = contentElement.label;
+        label.id = contentElement.id + '-label';
 
         const displayValue = document.createElement("span");
-        displayValue.textContent = (contentElement.htmlAttributes.value || '50') + (contentElement.unit || '');
+        displayValue.id = contentElement.id + '-value-label';
+        displayValue.textContent = contentElement.htmlAttributes.value + (contentElement.unit || '');
 
         const labelAndDisplay = document.createElement("div");
         labelAndDisplay.className = "row";
@@ -377,24 +363,23 @@ class DialogHelper {
         labelAndDisplay.appendChild(displayValue);
 
         const slider = document.createElement("input");
+        slider.id = contentElement.id;
         slider.setAttribute("type", "range");
-        slider.setAttribute("min", "0");
-        slider.setAttribute("max", "100");
-        slider.setAttribute("value", "50");
 
         slider.addEventListener('change',
-            () => displayValue.textContent = Math.round(slider.value) +  (contentElement.unit || ''));
+            () => displayValue.textContent = Math.round(slider.value) + (contentElement.unit || ''));
 
-        labelWrapper.appendChild(labelAndDisplay);
-        labelWrapper.appendChild(slider);
+        sliderWrapper.appendChild(labelAndDisplay);
+        sliderWrapper.appendChild(slider);
 
         if (contentElement.htmlAttributes) {
             for (let name in contentElement.htmlAttributes) {
-                slider.setAttribute(name, contentElement.htmlAttributes[name]);
+                if (contentElement.htmlAttributes.hasOwnProperty(name))
+                    slider.setAttribute(name, contentElement.htmlAttributes[name]);
             }
         }
 
-        return {wrapper: labelWrapper, input: slider}
+        return {wrapper: sliderWrapper, input: slider}
     }
 
     /**
@@ -533,6 +518,7 @@ class DialogHelper {
     /**
      * An input for numeric values
      */
+
     /*static get NUMBER_INPUT() {
         return 6;
     }*/
