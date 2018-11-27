@@ -10,7 +10,11 @@
     {
       "type": "menu",
       "label": "xd-dialog-helper modal...",
-      "commandId": "showModal"
+      "commandId": "showModal",
+      "shortcut": {
+        "win": "Ctrl+Shift+Alt+X",
+        "mac": "Cmd+Shift+Alt+X"
+      }
     }
   ]
 }

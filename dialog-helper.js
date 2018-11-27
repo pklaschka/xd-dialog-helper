@@ -20,7 +20,7 @@ class DialogHelper {
     /**
      * A content element of the dialog
      * @typedef {Object} contentElement
-     * @property {HEADER | TEXT_INPUT | SLIDER | DESCRIPTION | SELECT | TEXT_AREA | HR | NUMBER_INPUT | CHECKBOX} type The type of the element
+     * @property {HEADER | TEXT_INPUT | SLIDER | DESCRIPTION | SELECT | TEXT_AREA | HR | CHECKBOX} type The type of the element
      * @property {string} id The unique identifier of the element (will get used in the results object of the modal)
      * @property {Array<{value:string, label:string}>} [options] The options that can get chosen by the user (**only** relevant for type`DialogHelper.SELECT`)
      * @property {string} [label=id] The label of the element (i.e., e.g., explanatory text or the text itself for headlines and descriptions)
@@ -79,10 +79,10 @@ class DialogHelper {
                         const element = elements[key];
 
                         if (element.input) {
-                            if (element.input.value !== undefined) {
-                                returnValue[key] = element.input.value;
-                            } else if (element.input.checked !== undefined) {
+                            if (element.input.type === 'checkbox') {
                                 returnValue[key] = element.input.checked;
+                            } else {
+                                returnValue[key] = element.input.value || '';
                             }
                         }
                     }
@@ -263,7 +263,7 @@ class DialogHelper {
             }
         }
 
-        return {wrapper: sliderWrapper, input: textInput};
+        return {wrapper: sliderWrapper, input: slider};
     }
 
     /**
@@ -277,10 +277,10 @@ class DialogHelper {
         const textarea = document.createElement('textarea');
         textarea.id = contentElement.id;
         textarea.placeholder = contentElement.label;
-        const textareLabel = document.createElement('span');
-        textareLabel.id = contentElement.id + '-label';
-        textareLabel.innerHTML = contentElement.label + '<br>';
-        textareaWrapper.appendChild(textareLabel);
+        const textareaLabel = document.createElement('span');
+        textareaLabel.id = contentElement.id + '-label';
+        textareaLabel.innerHTML = contentElement.label + '<br>';
+        textareaWrapper.appendChild(textareaLabel);
         textareaWrapper.appendChild(textarea);
 
 
@@ -290,7 +290,7 @@ class DialogHelper {
             }
         }
 
-        return {wrapper: textareaWrapper, input: textArea};
+        return {wrapper: textareaWrapper, input: textarea};
     }
 
     /**
@@ -311,7 +311,7 @@ class DialogHelper {
         checkboxWrapper.appendChild(checkbox);
         const checkboxLabel = document.createElement('span');
         checkboxLabel.id = contentElement.id + '-label';
-        checkboxLabel.innerHTML = label;
+        checkboxLabel.innerHTML = contentElement.label;
         checkboxWrapper.appendChild(checkboxLabel);
 
 

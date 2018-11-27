@@ -4,7 +4,7 @@ function showModal() {
     DialogHelper.showDialog('test', 'Test Plugin', [
         {
             type: DialogHelper.HR,
-            id: 'hr'
+            id: 'hr',
         },
         {
             type: DialogHelper.DESCRIPTION,
@@ -39,7 +39,12 @@ function showModal() {
         {
             type: DialogHelper.SLIDER,
             id: 'slider',
-            label: 'A slider for something'
+            label: 'A slider for something',
+            htmlAttributes: {
+                'min': 1,
+                'max': 3,
+                value: 2
+            }
         },
         {
             type: DialogHelper.TEXT_AREA,
