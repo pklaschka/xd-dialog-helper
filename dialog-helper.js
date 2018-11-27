@@ -244,7 +244,12 @@ class DialogHelper {
      * @return {{wrapper: HTMLElement, input: HTMLElement} | null}
      */
     static parseSlider(contentElement) {
-        if (!contentElement.htmlAttributes || !contentElement.htmlAttributes.value || !contentElement.htmlAttributes.min || !contentElement.htmlAttributes.max) {
+        if (
+            contentElement.htmlAttributes === undefined ||
+            contentElement.htmlAttributes.value === undefined ||
+            contentElement.htmlAttributes.min === undefined ||
+            contentElement.htmlAttributes.max === undefined
+        ) {
             console.error('A slider must have a min, max and value parameter speciefied in its `htmlAttributes`.');
             return null;
         }
