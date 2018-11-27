@@ -18,18 +18,24 @@ function showModal() {
             options: [
                 {
                     label: 'Option 1',
-                    value: 1
+                    value: 'opt1'
                 },
                 {
                     label: 'Option 2',
-                    value: 2
+                    value: 'opt2'
                 }
-            ]
+            ],
+            htmlAttributes: {
+                value: 'opt1'
+            }
         },
         {
             type: DialogHelper.TEXT_INPUT,
             id: 'txtInput',
-            label: 'Some text input:'
+            label: 'Some text input:',
+            htmlAttributes: {
+                value: 'Initial Value'
+            }
         },
         {
             type: DialogHelper.HEADER,

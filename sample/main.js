@@ -340,7 +340,12 @@ class DialogHelper {
      * @return {{wrapper: HTMLElement, input: HTMLElement} | null}
      */
     static parseSlider(contentElement) {
-        if (!contentElement.htmlAttributes || !contentElement.htmlAttributes.value || !contentElement.htmlAttributes.min || !contentElement.htmlAttributes.max) {
+        if (
+            contentElement.htmlAttributes === undefined ||
+            contentElement.htmlAttributes.value === undefined ||
+            contentElement.htmlAttributes.min === undefined ||
+            contentElement.htmlAttributes.max === undefined
+        ) {
             console.error('A slider must have a min, max and value parameter speciefied in its `htmlAttributes`.');
             return null;
         }
@@ -455,12 +460,6 @@ class DialogHelper {
         const select = document.createElement('select');
         select.id = contentElement.id;
 
-        if (contentElement.htmlAttributes) {
-            for (let name in contentElement.htmlAttributes) {
-                select.setAttribute(name, contentElement.htmlAttributes[name]);
-            }
-        }
-
         for (let entry of contentElement.options) {
             let optEntry = document.createElement("option");
             optEntry.value = entry.value;
@@ -468,6 +467,15 @@ class DialogHelper {
             select.appendChild(optEntry);
         }
         selectWrapper.appendChild(select);
+
+        if (contentElement.htmlAttributes) {
+            for (let name in contentElement.htmlAttributes) {
+                select.setAttribute(name, contentElement.htmlAttributes[name]);
+            }
+            // To select value in select:
+            if (contentElement.htmlAttributes['value'])
+                select.value = contentElement.htmlAttributes.value;
+        }
 
         return {wrapper: selectWrapper, input: select};
     }
@@ -569,18 +577,24 @@ function showModal() {
             options: [
                 {
                     label: 'Option 1',
-                    value: 1
+                    value: 'opt1'
                 },
                 {
                     label: 'Option 2',
-                    value: 2
+                    value: 'opt2'
                 }
-            ]
+            ],
+            htmlAttributes: {
+                value: 'opt1'
+            }
         },
         {
             type: DialogHelper.TEXT_INPUT,
             id: 'txtInput',
-            label: 'Some text input:'
+            label: 'Some text input:',
+            htmlAttributes: {
+                value: 'Initial Value'
+            }
         },
         {
             type: DialogHelper.HEADER,

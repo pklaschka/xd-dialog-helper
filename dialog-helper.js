@@ -364,12 +364,6 @@ class DialogHelper {
         const select = document.createElement('select');
         select.id = contentElement.id;
 
-        if (contentElement.htmlAttributes) {
-            for (let name in contentElement.htmlAttributes) {
-                select.setAttribute(name, contentElement.htmlAttributes[name]);
-            }
-        }
-
         for (let entry of contentElement.options) {
             let optEntry = document.createElement("option");
             optEntry.value = entry.value;
@@ -377,6 +371,15 @@ class DialogHelper {
             select.appendChild(optEntry);
         }
         selectWrapper.appendChild(select);
+
+        if (contentElement.htmlAttributes) {
+            for (let name in contentElement.htmlAttributes) {
+                select.setAttribute(name, contentElement.htmlAttributes[name]);
+            }
+            // To select value in select:
+            if (contentElement.htmlAttributes['value'])
+                select.value = contentElement.htmlAttributes.value;
+        }
 
         return {wrapper: selectWrapper, input: select};
     }
