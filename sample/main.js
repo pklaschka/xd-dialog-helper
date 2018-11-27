@@ -191,7 +191,7 @@ class DialogHelper {
             form.onsubmit = onsubmit;
 
             const cancelButton = document.querySelector("#dialogHelperBtnCancel");
-            cancelButton.addEventListener("click", () => dialog.close('cancel'));
+            cancelButton.addEventListener("click", () => dialog.close('reasonCanceled'));
 
             const okButton = document.querySelector("#dialogHelperBtnOk");
             okButton.addEventListener("click", e => {
@@ -203,7 +203,7 @@ class DialogHelper {
                 options.onBeforeShow(dialog, elements.map(value => value.input ? value.input : value.wrapper));
 
             const result = await dialog.showModal();
-            if (result !== 'cancel') {
+            if (result !== 'reasonCanceled') {
                 resolve(result);
             } else {
                 reject(`Dialog '${id}' got canceled by the user`);
