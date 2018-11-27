@@ -41,10 +41,8 @@ function showModal() {
             id: 'slider',
             label: 'A slider for something',
             htmlAttributes: {
-                'min': 1,
-                'max': 3,
-                value: 2
-            }
+            },
+            unit: '%'
         },
         {
             type: DialogHelper.TEXT_AREA,

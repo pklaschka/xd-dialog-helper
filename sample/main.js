@@ -120,6 +120,7 @@ class DialogHelper {
      * @property {string} id The unique identifier of the element (will get used in the results object of the modal)
      * @property {Array<{value:string, label:string}>} [options] The options that can get chosen by the user (**only** relevant for type`DialogHelper.SELECT`)
      * @property {string} [label=id] The label of the element (i.e., e.g., explanatory text or the text itself for headlines and descriptions)
+     * @property {string} [unit=''] The unit of the numeric value (only relevant for type `DialogHelper.SLIDER`)
      * @property {Object} [htmlAttributes={}] Additional HTML attributes for the input field (e.g., `style`, `min` and `max` for numeric input etc.)
      */
 
@@ -340,7 +341,7 @@ class DialogHelper {
      * @return {{wrapper: HTMLElement, input: HTMLElement}}
      */
     static parseSlider(contentElement) {
-
+        /*
         let sliderWrapper = document.createElement("label");
         sliderWrapper.id = contentElement.id + '-wrapper';
         const slider = document.createElement('input');
@@ -359,7 +360,41 @@ class DialogHelper {
             }
         }
 
-        return {wrapper: sliderWrapper, input: textInput};
+        return {wrapper: sliderWrapper, input: slider};*/
+
+        const labelWrapper = document.createElement("label");
+
+        const label = document.createElement("span");
+        label.textContent = contentElement.label;
+
+        const displayValue = document.createElement("span");
+        displayValue.textContent = (contentElement.htmlAttributes.value || '50') + (contentElement.unit || '');
+
+        const labelAndDisplay = document.createElement("div");
+        labelAndDisplay.className = "row";
+        labelAndDisplay.style.justifyContent = "space-between";
+        labelAndDisplay.appendChild(label);
+        labelAndDisplay.appendChild(displayValue);
+
+        const slider = document.createElement("input");
+        slider.setAttribute("type", "range");
+        slider.setAttribute("min", "0");
+        slider.setAttribute("max", "100");
+        slider.setAttribute("value", "50");
+
+        slider.addEventListener('change',
+            () => displayValue.textContent = Math.round(slider.value) +  (contentElement.unit || ''));
+
+        labelWrapper.appendChild(labelAndDisplay);
+        labelWrapper.appendChild(slider);
+
+        if (contentElement.htmlAttributes) {
+            for (let name in contentElement.htmlAttributes) {
+                slider.setAttribute(name, contentElement.htmlAttributes[name]);
+            }
+        }
+
+        return {wrapper: labelWrapper, input: slider}
     }
 
     /**
@@ -571,10 +606,8 @@ function showModal() {
             id: 'slider',
             label: 'A slider for something',
             htmlAttributes: {
-                'min': 1,
-                'max': 3,
-                value: 2
-            }
+            },
+            unit: '%'
         },
         {
             type: DialogHelper.TEXT_AREA,
