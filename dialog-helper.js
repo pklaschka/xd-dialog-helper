@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2018. by Pablo Klaschka
+ */
+
 let dialogs = {};
 
 class DialogHelper {
