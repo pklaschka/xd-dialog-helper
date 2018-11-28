@@ -29,6 +29,7 @@ class DialogHelper {
      * @property {Array<{value:string, label:string}>} [options] The options that can get chosen by the user (**only** relevant for type`DialogHelper.SELECT`)
      * @property {string} [label=id] The label of the element (i.e., e.g., explanatory text or the text itself for headlines and descriptions)
      * @property {string} [unit=''] The unit of the numeric value (only relevant for type `DialogHelper.SLIDER`)
+     * @property {string|boolean|number} [value] The initial of a form field (will replace a value attribute in {@link contentElement.htmlAttributes} if one is set). For a {@link CHECKBOX}, a boolean value determines whether it is checked or not.
      * @property {Object} [htmlAttributes={}] Additional HTML attributes for the input field (e.g., `style`, `min` and `max` for numeric input etc.)
      */
 
@@ -239,6 +240,9 @@ class DialogHelper {
             }
         }
 
+        if (contentElement.value !== undefined)
+            input.value = contentElement.value;
+
         return {wrapper: inputWrapper, input: input};
     }
 
@@ -250,11 +254,11 @@ class DialogHelper {
     static parseSlider(contentElement) {
         if (
             contentElement.htmlAttributes === undefined ||
-            contentElement.htmlAttributes.value === undefined ||
+            (contentElement.htmlAttributes.value === undefined && contentElement.value === undefined) ||
             contentElement.htmlAttributes.min === undefined ||
             contentElement.htmlAttributes.max === undefined
         ) {
-            console.error('A slider must have a min, max and value parameter speciefied in its `htmlAttributes`.');
+            console.error('A slider must have a min, max and value parameter specified in its `htmlAttributes` (value can also be specified outside the `htmlAttributes`).');
             return null;
         }
 
@@ -267,7 +271,7 @@ class DialogHelper {
 
         const displayValue = document.createElement("span");
         displayValue.id = contentElement.id + '-value-label';
-        displayValue.textContent = contentElement.htmlAttributes.value + (contentElement.unit || '');
+        displayValue.textContent = (contentElement.htmlAttributes.value || contentElement.value) + (contentElement.unit || '');
 
         const labelAndDisplay = document.createElement("div");
         labelAndDisplay.className = "row";
@@ -291,6 +295,9 @@ class DialogHelper {
                     slider.setAttribute(name, contentElement.htmlAttributes[name]);
             }
         }
+
+        if (contentElement.value !== undefined)
+            slider.value = contentElement.value;
 
         return {wrapper: sliderWrapper, input: slider}
     }
@@ -318,6 +325,9 @@ class DialogHelper {
                 textarea.setAttribute(name, contentElement.htmlAttributes[name]);
             }
         }
+
+        if (contentElement.value !== undefined)
+            textarea.value = contentElement.value;
 
         return {wrapper: textareaWrapper, input: textarea};
     }
@@ -348,6 +358,11 @@ class DialogHelper {
             for (let name in contentElement.htmlAttributes) {
                 checkbox.setAttribute(name, contentElement.htmlAttributes[name]);
             }
+        }
+
+        if (contentElement.value !== undefined) {
+            checkbox.value = contentElement.value;
+            checkbox.checked = contentElement.value === true;
         }
 
         return {wrapper: checkboxWrapper, input: checkbox};
@@ -384,6 +399,10 @@ class DialogHelper {
             if (contentElement.htmlAttributes['value'])
                 select.value = contentElement.htmlAttributes.value;
         }
+
+
+        if (contentElement.value !== undefined)
+            select.value = contentElement.value;
 
         return {wrapper: selectWrapper, input: select};
     }
