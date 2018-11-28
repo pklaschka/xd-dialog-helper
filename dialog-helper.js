@@ -24,7 +24,7 @@ class DialogHelper {
     /**
      * A content element of the dialog
      * @typedef {Object} contentElement
-     * @property {HEADER | TEXT_INPUT | SLIDER | DESCRIPTION | SELECT | TEXT_AREA | HR | CHECKBOX} type The type of the element
+     * @property {HEADER | TEXT_INPUT | SLIDER | TEXT | SELECT | TEXT_AREA | HR | CHECKBOX} type The type of the element
      * @property {string} id The unique identifier of the element (will get used in the results object of the modal)
      * @property {Array<{value:string, label:string}>} [options] The options that can get chosen by the user (**only** relevant for type`DialogHelper.SELECT`)
      * @property {string} [label=id] The label of the element (i.e., e.g., explanatory text or the text itself for headlines and descriptions)
@@ -398,8 +398,16 @@ class DialogHelper {
 
     /**
      * A simple text (primarily used for descriptions)
+     * @deprecated Deprecated since version 0.9.1, will be removed in v1.0.0. Use {@link TEXT} instead
      */
     static get DESCRIPTION() {
+        return 1;
+    }
+
+    /**
+     * A simple text (primarily used for descriptions)
+     */
+    static get TEXT() {
         return 1;
     }
 

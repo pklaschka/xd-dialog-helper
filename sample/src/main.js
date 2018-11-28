@@ -7,7 +7,7 @@ function showModal() {
             id: 'hr',
         },
         {
-            type: DialogHelper.DESCRIPTION,
+            type: DialogHelper.TEXT,
             id: 'moin',
             label: 'test'
         },
