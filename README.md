@@ -24,4 +24,4 @@ const dialogHelper = require('./lib/dialog-helper');
 ```
 
 #### Documentation for the library
-You can find a detailed guide on how to use the library in the [repositories wiki](https://github.com/pklaschka/xd-dialog-helper/wiki).
+You can find a detailed guide on how to use the library in the [repository wiki](https://github.com/pklaschka/xd-dialog-helper/wiki).
