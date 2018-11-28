@@ -18,17 +18,19 @@ class DialogHelper {
      * @property {string} [okButtonText="Ok"] The text in the "ok" button (e.g., "ok", "insert" or similar)
      * @property {string} [cancelButtonText="Cancel"] The text in the "cancel" button (e.g., "cancel", "abort" or similar)
      * @property {string} [css] CSS code that gets injected into the style
+     * @property {number} [width=360] The dialog width in px
      * @property {onBeforeShowCallback} [onBeforeShow] A function that gets triggered before the dialog gets shown. You can – e.g. – inject custom code here.
      */
 
     /**
      * A content element of the dialog
      * @typedef {Object} contentElement
-     * @property {HEADER | TEXT_INPUT | SLIDER | DESCRIPTION | SELECT | TEXT_AREA | HR | CHECKBOX} type The type of the element
+     * @property {HEADER | TEXT_INPUT | SLIDER | TEXT | SELECT | TEXT_AREA | HR | CHECKBOX} type The type of the element
      * @property {string} id The unique identifier of the element (will get used in the results object of the modal)
      * @property {Array<{value:string, label:string}>} [options] The options that can get chosen by the user (**only** relevant for type`DialogHelper.SELECT`)
      * @property {string} [label=id] The label of the element (i.e., e.g., explanatory text or the text itself for headlines and descriptions)
      * @property {string} [unit=''] The unit of the numeric value (only relevant for type `DialogHelper.SLIDER`)
+     * @property {string|boolean|number} [value] The initial of a form field (will replace a value attribute in {@link contentElement.htmlAttributes} if one is set). For a {@link CHECKBOX}, a boolean value determines whether it is checked or not.
      * @property {Object} [htmlAttributes={}] Additional HTML attributes for the input field (e.g., `style`, `min` and `max` for numeric input etc.)
      */
 
@@ -52,6 +54,16 @@ class DialogHelper {
                 dialog = dialogs[id];
                 dialog.innerHTML = ''; // Empty the dialog
             }
+
+            const stylesheet = document.createElement('style');
+            stylesheet.innerHTML = `
+            dialog#${id} {
+                width: ${options.width||360}px;
+            }
+            
+            ${options.css || ''}
+            `;
+            dialog.appendChild(stylesheet);
 
             // fill the dialog with contents
             const form = document.createElement('form');
@@ -154,7 +166,7 @@ class DialogHelper {
                     elementsObject[element.id] = this.parseHR(element);
                     break;
                 default:
-                    elementsObject[element.id] = this.parseDescription(element);
+                    elementsObject[element.id] = this.parseText(element);
 
             }
         }
@@ -184,7 +196,7 @@ class DialogHelper {
      * @param {contentElement} contentElement
      * @return {{wrapper: HTMLElement}}
      */
-    static parseDescription(contentElement) {
+    static parseText(contentElement) {
         const paragraph = document.createElement('p');
         paragraph.innerHTML = contentElement.label;
         if (contentElement.htmlAttributes) {
@@ -239,6 +251,9 @@ class DialogHelper {
             }
         }
 
+        if (contentElement.value !== undefined)
+            input.value = contentElement.value;
+
         return {wrapper: inputWrapper, input: input};
     }
 
@@ -250,11 +265,11 @@ class DialogHelper {
     static parseSlider(contentElement) {
         if (
             contentElement.htmlAttributes === undefined ||
-            contentElement.htmlAttributes.value === undefined ||
+            (contentElement.htmlAttributes.value === undefined && contentElement.value === undefined) ||
             contentElement.htmlAttributes.min === undefined ||
             contentElement.htmlAttributes.max === undefined
         ) {
-            console.error('A slider must have a min, max and value parameter speciefied in its `htmlAttributes`.');
+            console.error('A slider must have a min, max and value parameter specified in its `htmlAttributes` (value can also be specified outside the `htmlAttributes`).');
             return null;
         }
 
@@ -267,7 +282,7 @@ class DialogHelper {
 
         const displayValue = document.createElement("span");
         displayValue.id = contentElement.id + '-value-label';
-        displayValue.textContent = contentElement.htmlAttributes.value + (contentElement.unit || '');
+        displayValue.textContent = (contentElement.htmlAttributes.value || contentElement.value) + (contentElement.unit || '');
 
         const labelAndDisplay = document.createElement("div");
         labelAndDisplay.className = "row";
@@ -291,6 +306,9 @@ class DialogHelper {
                     slider.setAttribute(name, contentElement.htmlAttributes[name]);
             }
         }
+
+        if (contentElement.value !== undefined)
+            slider.value = contentElement.value;
 
         return {wrapper: sliderWrapper, input: slider}
     }
@@ -318,6 +336,9 @@ class DialogHelper {
                 textarea.setAttribute(name, contentElement.htmlAttributes[name]);
             }
         }
+
+        if (contentElement.value !== undefined)
+            textarea.value = contentElement.value;
 
         return {wrapper: textareaWrapper, input: textarea};
     }
@@ -348,6 +369,11 @@ class DialogHelper {
             for (let name in contentElement.htmlAttributes) {
                 checkbox.setAttribute(name, contentElement.htmlAttributes[name]);
             }
+        }
+
+        if (contentElement.value !== undefined) {
+            checkbox.value = contentElement.value;
+            checkbox.checked = contentElement.value === true;
         }
 
         return {wrapper: checkboxWrapper, input: checkbox};
@@ -385,6 +411,10 @@ class DialogHelper {
                 select.value = contentElement.htmlAttributes.value;
         }
 
+
+        if (contentElement.value !== undefined)
+            select.value = contentElement.value;
+
         return {wrapper: selectWrapper, input: select};
     }
 
@@ -398,8 +428,16 @@ class DialogHelper {
 
     /**
      * A simple text (primarily used for descriptions)
+     * @deprecated Deprecated since version 0.9.1, will be removed in v1.0.0. Use {@link TEXT} instead
      */
     static get DESCRIPTION() {
+        return 1;
+    }
+
+    /**
+     * A simple text (primarily used for descriptions)
+     */
+    static get TEXT() {
         return 1;
     }
 

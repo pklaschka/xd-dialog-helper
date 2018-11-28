@@ -7,7 +7,7 @@ function showModal() {
             id: 'hr',
         },
         {
-            type: DialogHelper.DESCRIPTION,
+            type: DialogHelper.TEXT,
             id: 'moin',
             label: 'test'
         },
@@ -25,17 +25,13 @@ function showModal() {
                     value: 'opt2'
                 }
             ],
-            htmlAttributes: {
-                value: 'opt1'
-            }
+            value: 'opt1'
         },
         {
             type: DialogHelper.TEXT_INPUT,
             id: 'txtInput',
             label: 'Some text input:',
-            htmlAttributes: {
-                value: 'Initial Value'
-            }
+            value: 'Initial Value'
         },
         {
             type: DialogHelper.HEADER,
@@ -48,23 +44,26 @@ function showModal() {
             label: 'A slider for something',
             htmlAttributes: {
                 min: 0,
-                max: 200,
-                value: 10
+                max: 200
             },
-            unit: 'px'
+            unit: 'px',
+            value: 10
         },
         {
             type: DialogHelper.TEXT_AREA,
             id: 'textArea',
-            label: 'Message'
+            label: 'Message',
+            value: 'Some text \n With new lines'
         },
         {
             type: DialogHelper.CHECKBOX,
             id: 'cb',
-            label: 'I accept the terms and conditions'
+            label: 'I accept the terms and conditions',
+            value: true
         },
     ], {
         okButtonText: 'Insert',
+        width: 480
     }).then(results => console.log(JSON.stringify(results)), reason => console.log('Dialog got canceled ' + reason));
 
 }
