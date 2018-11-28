@@ -154,7 +154,7 @@ class DialogHelper {
                     elementsObject[element.id] = this.parseHR(element);
                     break;
                 default:
-                    elementsObject[element.id] = this.parseDescription(element);
+                    elementsObject[element.id] = this.parseText(element);
 
             }
         }
@@ -184,7 +184,7 @@ class DialogHelper {
      * @param {contentElement} contentElement
      * @return {{wrapper: HTMLElement}}
      */
-    static parseDescription(contentElement) {
+    static parseText(contentElement) {
         const paragraph = document.createElement('p');
         paragraph.innerHTML = contentElement.label;
         if (contentElement.htmlAttributes) {
