@@ -18,6 +18,7 @@ class DialogHelper {
      * @property {string} [okButtonText="Ok"] The text in the "ok" button (e.g., "ok", "insert" or similar)
      * @property {string} [cancelButtonText="Cancel"] The text in the "cancel" button (e.g., "cancel", "abort" or similar)
      * @property {string} [css] CSS code that gets injected into the style
+     * @property {number} [width=360] The dialog width in px
      * @property {onBeforeShowCallback} [onBeforeShow] A function that gets triggered before the dialog gets shown. You can – e.g. – inject custom code here.
      */
 
@@ -53,6 +54,16 @@ class DialogHelper {
                 dialog = dialogs[id];
                 dialog.innerHTML = ''; // Empty the dialog
             }
+
+            const stylesheet = document.createElement('style');
+            stylesheet.innerHTML = `
+            dialog#${id} {
+                width: ${options.width||360}px;
+            }
+            
+            ${options.css || ''}
+            `;
+            dialog.appendChild(stylesheet);
 
             // fill the dialog with contents
             const form = document.createElement('form');

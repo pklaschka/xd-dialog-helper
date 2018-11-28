@@ -63,6 +63,7 @@ function showModal() {
         },
     ], {
         okButtonText: 'Insert',
+        width: 480
     }).then(results => console.log(JSON.stringify(results)), reason => console.log('Dialog got canceled ' + reason));
 
 }
