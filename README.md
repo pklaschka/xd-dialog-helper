@@ -1,4 +1,7 @@
 # xd-dialog-helper
+
+[![NPM](https://nodei.co/npm/xd-dialog-helper.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/xd-dialog-helper/)
+
 A small library that serves as an abstraction layer for creating **medium complex** dialogs (containing options a user can choose, not only things like error messages...) in plugins for Adobe XD CC.
 
 ## Usage
