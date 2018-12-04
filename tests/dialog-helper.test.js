@@ -251,10 +251,10 @@ describe('Dialog-Helper', () => {
                     done();
                 });
 
-                expect(document.getElementById('select').children.length).toBe(3);
+                expect(document.getElementById('c-select').children.length).toBe(3);
                 document.getElementById('c-dialogHelperBtnOk').click();
             });
-            expect(document.getElementById('select').children.length).toBe(2);
+            expect(document.getElementById('b-select').children.length).toBe(2);
             document.getElementById('b-dialogHelperBtnOk').click();
         });
     });
