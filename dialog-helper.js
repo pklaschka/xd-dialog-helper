@@ -72,7 +72,7 @@ class DialogHelper {
             titleElement.innerHTML = title;
             form.appendChild(titleElement);
 
-            const elements = DialogHelper.parseElements(contents);
+            const elements = DialogHelper.parseElements(id, contents);
 
             for (let key in elements) {
                 if (elements.hasOwnProperty(key))

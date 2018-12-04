@@ -109,7 +109,7 @@ describe('Dialog-Helper', () => {
                 expect(value).toEqual({select: 'opt1'});
                 done();
             });
-            document.getElementById('dialogHelperBtnOk').click();
+            document.getElementById('b-dialogHelperBtnOk').click();
         });
         it('should initially select the correct element', async done => {
             DialogHelper.showDialog('b', 'abc', [
@@ -126,9 +126,9 @@ describe('Dialog-Helper', () => {
             ], {}).then(() => {
                 done();
             });
-            expect(document.getElementById('select').selectedIndex).toBe(0);
-            expect(document.getElementById('select').value).toBe('opt1');
-            document.getElementById('dialogHelperBtnOk').click();
+            expect(document.getElementById('b-select').selectedIndex).toBe(0);
+            expect(document.getElementById('b-select').value).toBe('opt1');
+            document.getElementById('b-dialogHelperBtnOk').click();
         });
         it('should contain the correct amount of options', async done => {
             DialogHelper.showDialog('b', 'abc', [
@@ -145,8 +145,8 @@ describe('Dialog-Helper', () => {
             ], {}).then(() => {
                 done();
             });
-            expect(document.getElementById('select').children.length).toBe(2);
-            document.getElementById('dialogHelperBtnOk').click();
+            expect(document.getElementById('b-select').children.length).toBe(2);
+            document.getElementById('b-dialogHelperBtnOk').click();
         });
     });
 
@@ -179,11 +179,11 @@ describe('Dialog-Helper', () => {
                     done();
                 });
 
-                expect(document.getElementById('select').children.length).toBe(2);
-                document.getElementById('dialogHelperBtnOk').click();
+                expect(document.getElementById('b-select').children.length).toBe(2);
+                document.getElementById('b-dialogHelperBtnOk').click();
             });
-            expect(document.getElementById('select').children.length).toBe(2);
-            document.getElementById('dialogHelperBtnOk').click();
+            expect(document.getElementById('b-select').children.length).toBe(2);
+            document.getElementById('b-dialogHelperBtnOk').click();
         });
 
         it('should correctly load the same dialog with different contents twice', async function (done) {
@@ -215,11 +215,11 @@ describe('Dialog-Helper', () => {
                     done();
                 });
 
-                expect(document.getElementById('select').children.length).toBe(3);
-                document.getElementById('dialogHelperBtnOk').click();
+                expect(document.getElementById('b-select').children.length).toBe(3);
+                document.getElementById('b-dialogHelperBtnOk').click();
             });
-            expect(document.getElementById('select').children.length).toBe(2);
-            document.getElementById('dialogHelperBtnOk').click();
+            expect(document.getElementById('b-select').children.length).toBe(2);
+            document.getElementById('b-dialogHelperBtnOk').click();
         });
 
         it('should correctly load two different dialogs after each other', async function (done) {
@@ -252,10 +252,10 @@ describe('Dialog-Helper', () => {
                 });
 
                 expect(document.getElementById('select').children.length).toBe(3);
-                document.getElementById('dialogHelperBtnOk').click();
+                document.getElementById('c-dialogHelperBtnOk').click();
             });
             expect(document.getElementById('select').children.length).toBe(2);
-            document.getElementById('dialogHelperBtnOk').click();
+            document.getElementById('b-dialogHelperBtnOk').click();
         });
     });
 
