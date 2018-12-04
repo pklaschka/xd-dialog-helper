@@ -72,7 +72,7 @@ class DialogHelper {
             titleElement.innerHTML = title;
             form.appendChild(titleElement);
 
-            const elements = DialogHelper.parseElements(contents);
+            const elements = DialogHelper.parseElements(id, contents);
 
             for (let key in elements) {
                 if (elements.hasOwnProperty(key))
@@ -82,8 +82,8 @@ class DialogHelper {
             const footer = document.createElement('footer');
 
             footer.innerHTML = `
-        <button id="dialogHelperBtnCancel" uxp-variant="primary">${options.cancelButtonText || 'Cancel'}</button>
-        <button id="dialogHelperBtnOk" type="submit" uxp-variant="cta">${options.okButtonText || 'Ok'}</button>`;
+        <button id="${id}-dialogHelperBtnCancel" uxp-variant="primary">${options.cancelButtonText || 'Cancel'}</button>
+        <button id="${id}-dialogHelperBtnOk" type="submit" uxp-variant="cta">${options.okButtonText || 'Ok'}</button>`;
 
             form.appendChild(footer);
             dialog.appendChild(form);
@@ -110,10 +110,10 @@ class DialogHelper {
 
             form.onsubmit = onsubmit;
 
-            const cancelButton = document.querySelector("#dialogHelperBtnCancel");
+            const cancelButton = document.querySelector("#"+id+"-dialogHelperBtnCancel");
             cancelButton.addEventListener("click", () => dialog.close('reasonCanceled'));
 
-            const okButton = document.querySelector("#dialogHelperBtnOk");
+            const okButton = document.querySelector("#"+id+"-dialogHelperBtnOk");
             okButton.addEventListener("click", e => {
                 onsubmit();
                 e.preventDefault();
@@ -134,39 +134,42 @@ class DialogHelper {
     /**
      * Create an object with the content elements in a key-value form (inside an object)
      * @private
+     * @param {string} dialogId
      * @param {Array<contentElement>} contents
      * @return {Object<{wrapper:HTMLElement, input: HTMLElement}>} An object containing the elements in key-value form (with the key being the id)
      */
-    static parseElements(contents) {
+    static parseElements(dialogId, contents) {
         let elementsObject = {};
         for (let element of contents) {
+            const virtualID = element.id;
+            element.id = dialogId + '-' + element.id;
             switch (element.type) {
                 case this.HEADER:
-                    elementsObject[element.id] = this.parseHeader(element);
+                    elementsObject[virtualID] = this.parseHeader(element);
                     break;
                 case this.TEXT_INPUT:
-                    elementsObject[element.id] = this.parseInput(element, 'text');
+                    elementsObject[virtualID] = this.parseInput(element, 'text');
                     break;
                 /*case this.NUMBER_INPUT:
                     elementsObject[element.id] = this.parseInput(element, 'number');
                     break;*/
                 case this.TEXT_AREA:
-                    elementsObject[element.id] = this.parseTextarea(element);
+                    elementsObject[virtualID] = this.parseTextarea(element);
                     break;
                 case this.SELECT:
-                    elementsObject[element.id] = this.parseSelect(element);
+                    elementsObject[virtualID] = this.parseSelect(element);
                     break;
                 case this.SLIDER:
-                    elementsObject[element.id] = this.parseSlider(element);
+                    elementsObject[virtualID] = this.parseSlider(element);
                     break;
                 case this.CHECKBOX:
-                    elementsObject[element.id] = this.parseCheckbox(element);
+                    elementsObject[virtualID] = this.parseCheckbox(element);
                     break;
                 case this.HR:
-                    elementsObject[element.id] = this.parseHR(element);
+                    elementsObject[virtualID] = this.parseHR(element);
                     break;
                 default:
-                    elementsObject[element.id] = this.parseText(element);
+                    elementsObject[virtualID] = this.parseText(element);
 
             }
         }

@@ -3,7 +3,9 @@
   "version": "0.9.1",
   "description": "An abstraction layer making it easier to display simple dialogs in plugins for Adobe XD CC",
   "main": "dialog-helper.js",
-  "scripts": {},
+  "scripts": {
+    "test": "jest --coverage"
+  },
   "repository": "github:pklaschka/xd-dialog-helper",
   "keywords": [
     "Adobe",
@@ -30,5 +32,8 @@
     "url": "https://github.com/pklaschka/xd-dialog-helper/issues",
     "email": "xdplugins@pabloklaschka.de"
   },
-  "homepage": "https://github.com/pklaschka/xd-dialog-helper#readme"
+  "homepage": "https://github.com/pklaschka/xd-dialog-helper#readme",
+  "devDependencies": {
+    "jest": "^23.6.0"
+  }
 }
