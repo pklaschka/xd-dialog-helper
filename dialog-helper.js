@@ -134,12 +134,14 @@ class DialogHelper {
     /**
      * Create an object with the content elements in a key-value form (inside an object)
      * @private
+     * @param {string} dialogId
      * @param {Array<contentElement>} contents
      * @return {Object<{wrapper:HTMLElement, input: HTMLElement}>} An object containing the elements in key-value form (with the key being the id)
      */
-    static parseElements(contents) {
+    static parseElements(dialogId, contents) {
         let elementsObject = {};
         for (let element of contents) {
+            element.id = dialogId + '-' + element.id;
             switch (element.type) {
                 case this.HEADER:
                     elementsObject[element.id] = this.parseHeader(element);
