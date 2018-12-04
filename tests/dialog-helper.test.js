@@ -28,7 +28,7 @@ describe('Dialog-Helper', () => {
                 expect(value).toEqual({cb: true});
                 done();
             });
-            document.getElementById('dialogHelperBtnOk').click();
+            document.getElementById('a-dialogHelperBtnOk').click();
         });
 
         it('should have the correct element and value', async done => {
@@ -38,8 +38,8 @@ describe('Dialog-Helper', () => {
                 expect(value).toEqual({cb: true});
                 done();
             });
-            expect(document.getElementById('cb').checked).toBeTruthy();
-            document.getElementById('dialogHelperBtnOk').click();
+            expect(document.getElementById('a-cb').checked).toBeTruthy();
+            document.getElementById('a-dialogHelperBtnOk').click();
         })
 
         it('should be able to process changed values', async done => {
@@ -49,10 +49,10 @@ describe('Dialog-Helper', () => {
                 expect(value).toEqual({cb: false});
                 done();
             });
-            expect(document.getElementById('cb').checked).toBeTruthy();
-            document.getElementById('cb').click();
-            expect(document.getElementById('cb').checked).toBeFalsy();
-            document.getElementById('dialogHelperBtnOk').click();
+            expect(document.getElementById('a-cb').checked).toBeTruthy();
+            document.getElementById('a-cb').click();
+            expect(document.getElementById('a-cb').checked).toBeFalsy();
+            document.getElementById('a-dialogHelperBtnOk').click();
         })
     });
 
@@ -64,7 +64,7 @@ describe('Dialog-Helper', () => {
                 expect(value).toEqual({txt: 'Hello World'});
                 done();
             });
-            document.getElementById('dialogHelperBtnOk').click();
+            document.getElementById('b-dialogHelperBtnOk').click();
         });
 
         it('should have the correct element and value', async done => {
@@ -74,8 +74,8 @@ describe('Dialog-Helper', () => {
                 expect(value).toEqual({txt: 'Hello World'});
                 done();
             });
-            expect(document.getElementById('txt').value).toBe('Hello World');
-            document.getElementById('dialogHelperBtnOk').click();
+            expect(document.getElementById('b-txt').value).toBe('Hello World');
+            document.getElementById('b-dialogHelperBtnOk').click();
         })
 
         it('should be able to process changed values', async done => {
@@ -85,10 +85,10 @@ describe('Dialog-Helper', () => {
                 expect(value).toEqual({txt: 'Hello World!'});
                 done();
             });
-            expect(document.getElementById('txt').value).toBe('Hello World');
-            document.getElementById('txt').value += '!';
-            expect(document.getElementById('txt').value).toBe('Hello World!');
-            document.getElementById('dialogHelperBtnOk').click();
+            expect(document.getElementById('b-txt').value).toBe('Hello World');
+            document.getElementById('b-txt').value += '!';
+            expect(document.getElementById('b-txt').value).toBe('Hello World!');
+            document.getElementById('b-dialogHelperBtnOk').click();
         })
     });
 
