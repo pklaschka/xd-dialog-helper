@@ -3,3 +3,5 @@ sample
 .vscode
 tests
 coverage
+.travis.yml
+.github
