@@ -257,6 +257,13 @@ describe('Dialog-Helper', () => {
             expect(document.getElementById('b-select').children.length).toBe(2);
             document.getElementById('b-dialogHelperBtnOk').click();
         });
+
+        it('should correctly load without optional parameters', async function (done) {
+            DialogHelper.showDialog('b', 'abc').then(() => {
+                done();
+            });
+            document.getElementById('b-dialogHelperBtnOk').click();
+        });
     });
 
 

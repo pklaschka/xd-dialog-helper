@@ -38,11 +38,14 @@ class DialogHelper {
      * Shows a dialog and awaits its results
      * @param {string} id The dialogs name / unique identifier
      * @param {string} title The title that gets displayed in the dialog
-     * @param {Array<contentElement>} contents The contents of the dialog
-     * @param {dialogOptions} options Additional options for the dialog
+     * @param {Array<contentElement>} [contents=[]] The contents of the dialog
+     * @param {dialogOptions} [options={}] Additional options for the dialog
      * @return {Promise<object>} Promise, which resolves with the form values or rejects if the dialog gets canceled
      */
     static showDialog(id, title, contents, options) {
+        contents = contents || [];
+        options = options || {};
+
         return new Promise(async (resolve, reject) => {
             let dialog;
             if (!dialogs[id]) {
