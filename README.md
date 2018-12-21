@@ -3,8 +3,11 @@
 [![Build Status](https://travis-ci.com/pklaschka/xd-dialog-helper.svg?branch=master)](https://travis-ci.com/pklaschka/xd-dialog-helper)
 [![npm version](https://badge.fury.io/js/xd-dialog-helper.svg)](https://badge.fury.io/js/xd-dialog-helper)
 ![David](https://img.shields.io/david/pklaschka/xd-dialog-helper.svg)
+[![GitHub Release Date](https://img.shields.io/github/release-date/pklaschka/xd-localization-helper.svg)](https://github.com/pklaschka/xd-localization-helper/releases)
+[![GitHub](https://img.shields.io/github/license/pklaschka/xd-localization-helper.svg)](https://github.com/pklaschka/xd-localization-helper/blob/master/LICENSE)
 
 [![NPM](https://nodei.co/npm/xd-dialog-helper.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/xd-dialog-helper/)
+
 
 ---
 A small library that serves as an abstraction layer for creating **medium complex** dialogs (containing options a user can choose, not only things like error messages...) in plugins for Adobe XD CC.
