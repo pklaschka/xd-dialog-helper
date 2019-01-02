@@ -257,6 +257,39 @@ describe('Dialog-Helper', () => {
             expect(document.getElementById('b-select').children.length).toBe(2);
             document.getElementById('b-dialogHelperBtnOk').click();
         });
+
+        it('should correctly load without optional parameters', async function (done) {
+            DialogHelper.showDialog('b', 'abc').then(() => {
+                done();
+            });
+            document.getElementById('b-dialogHelperBtnOk').click();
+        });
+
+        it('should correctly handle validation', async function (done) {
+            DialogHelper.showDialog('b', 'abc', [
+                {type: DialogHelper.CHECKBOX, value: false, id: 'cb', label: 'My checkbox'}
+            ], {
+                onValidate: (values) => {
+                    return values['cb'];
+                }
+            }).then(() => {
+                done();
+            });
+            let okButton = document.getElementById('b-dialogHelperBtnOk');
+            let cb = document.getElementById('b-cb');
+            expect(okButton.disabled).toBeTruthy();
+            expect(cb.checked).toBeFalsy();
+            cb.click();
+            expect(cb.checked).toBeTruthy();
+            expect(okButton.disabled).toBeFalsy();
+            cb.click();
+            expect(cb.checked).toBeFalsy();
+            expect(okButton.disabled).toBeTruthy();
+            cb.click();
+            expect(cb.checked).toBeTruthy();
+            expect(okButton.disabled).toBeFalsy();
+            okButton.click();
+        });
     });
 
 

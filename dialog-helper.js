@@ -1,4 +1,5 @@
 /*
+ * dialog-helper.js v0.9.2
  * Copyright (c) 2018. by Pablo Klaschka
  */
 
@@ -13,6 +14,12 @@ class DialogHelper {
      */
 
     /**
+     * @callback onValidationCallback
+     * @param {any[]} values The values (as they would be returned by the dialog)
+     * @return {boolean} True if the dialog entries are valid
+     */
+
+    /**
      * Options regarding the dialogs properties
      * @typedef {Object} dialogOptions
      * @property {string} [okButtonText="Ok"] The text in the "ok" button (e.g., "ok", "insert" or similar)
@@ -20,6 +27,7 @@ class DialogHelper {
      * @property {string} [css] CSS code that gets injected into the style
      * @property {number} [width=360] The dialog width in px
      * @property {onBeforeShowCallback} [onBeforeShow] A function that gets triggered before the dialog gets shown. You can – e.g. – inject custom code here.
+     * @property {onValidationCallback} [onValidate] A function that gets triggered when inputs change. Its return value determines if the inputs are value and therefore, if the ok button is clickable
      */
 
     /**
@@ -38,11 +46,14 @@ class DialogHelper {
      * Shows a dialog and awaits its results
      * @param {string} id The dialogs name / unique identifier
      * @param {string} title The title that gets displayed in the dialog
-     * @param {Array<contentElement>} contents The contents of the dialog
-     * @param {dialogOptions} options Additional options for the dialog
+     * @param {Array<contentElement>} [contents=[]] The contents of the dialog
+     * @param {dialogOptions} [options={}] Additional options for the dialog
      * @return {Promise<object>} Promise, which resolves with the form values or rejects if the dialog gets canceled
      */
     static showDialog(id, title, contents, options) {
+        contents = contents || [];
+        options = options || {};
+
         return new Promise(async (resolve, reject) => {
             let dialog;
             if (!dialogs[id]) {
@@ -58,7 +69,7 @@ class DialogHelper {
             const stylesheet = document.createElement('style');
             stylesheet.innerHTML = `
             dialog#${id} {
-                width: ${options.width||360}px;
+                width: ${options.width || 360}px;
             }
             
             ${options.css || ''}
@@ -86,10 +97,37 @@ class DialogHelper {
         <button id="${id}-dialogHelperBtnOk" type="submit" uxp-variant="cta">${options.okButtonText || 'Ok'}</button>`;
 
             form.appendChild(footer);
+
+            function onsubmit() {
+                dialog.close('ok');
+            }
+
+            form.onsubmit = onsubmit;
+
             dialog.appendChild(form);
             document.body.appendChild(dialog);
 
-            function onsubmit() {
+            const cancelButton = document.querySelector("#" + id + "-dialogHelperBtnCancel");
+            cancelButton.addEventListener("click", () => dialog.close('reasonCanceled'));
+
+            /**
+             * The ok button
+             * @type {HTMLButtonElement}
+             */
+            const okButton = document.querySelector("#" + id + "-dialogHelperBtnOk");
+            okButton.addEventListener("click", e => {
+                onsubmit();
+                e.preventDefault();
+            });
+
+            if (options.onBeforeShow)
+                options.onBeforeShow(dialog, elements.map(value => value.input ? value.input : value.wrapper));
+
+            if (options.onValidate)
+                this.setupValidation(elements, okButton, options.onValidate);
+
+            const result = await dialog.showModal();
+            if (result !== 'reasonCanceled') {
                 let returnValue = {};
                 for (let key in elements) {
                     if (elements.hasOwnProperty(key)) {
@@ -105,26 +143,7 @@ class DialogHelper {
                     }
                 }
 
-                dialog.close(returnValue);
-            }
-
-            form.onsubmit = onsubmit;
-
-            const cancelButton = document.querySelector("#"+id+"-dialogHelperBtnCancel");
-            cancelButton.addEventListener("click", () => dialog.close('reasonCanceled'));
-
-            const okButton = document.querySelector("#"+id+"-dialogHelperBtnOk");
-            okButton.addEventListener("click", e => {
-                onsubmit();
-                e.preventDefault();
-            });
-
-            if (options.onBeforeShow)
-                options.onBeforeShow(dialog, elements.map(value => value.input ? value.input : value.wrapper));
-
-            const result = await dialog.showModal();
-            if (result !== 'reasonCanceled') {
-                resolve(result);
+                resolve(returnValue);
             } else {
                 reject(`Dialog '${id}' got canceled by the user`);
             }
@@ -132,11 +151,57 @@ class DialogHelper {
     }
 
     /**
+     * Setting up validation of the dialog
+     * @param {Array<Object<{wrapper:HTMLElement, input: HTMLElement}>>} elements The elements
+     * @param {HTMLButtonElement} okButton The ok button (gets disabled if form is invalid)
+     * @param {onValidationCallback} validationFunction
+     */
+    static setupValidation(elements, okButton, validationFunction) {
+        function values(elements) {
+            let returnValue = {};
+            for (let key in elements) {
+                if (elements.hasOwnProperty(key)) {
+                    const element = elements[key];
+
+                    if (element.input) {
+                        if (element.input.type === 'checkbox') {
+                            returnValue[key] = element.input.checked;
+                        } else {
+                            returnValue[key] = element.input.value || '';
+                        }
+                    }
+                }
+            }
+
+            return returnValue;
+        }
+
+        if (validationFunction) {
+            for (let key in elements) {
+                if (elements.hasOwnProperty(key)) {
+                    let element = elements[key];
+
+                    element.input.addEventListener('change', () => {
+                        okButton.disabled = !validationFunction(
+                            values(elements)
+                        );
+                    })
+                }
+            }
+
+            // Initial validation
+            okButton.disabled = !validationFunction(
+                values(elements)
+            );
+        }
+    }
+
+    /**
      * Create an object with the content elements in a key-value form (inside an object)
      * @private
      * @param {string} dialogId
      * @param {Array<contentElement>} contents
-     * @return {Object<{wrapper:HTMLElement, input: HTMLElement}>} An object containing the elements in key-value form (with the key being the id)
+     * @return {Array<Object<{wrapper:HTMLElement, input: HTMLElement}>>} An object containing the elements in key-value form (with the key being the id)
      */
     static parseElements(dialogId, contents) {
         let elementsObject = {};
