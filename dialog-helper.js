@@ -96,8 +96,6 @@ class DialogHelper {
         <button id="${id}-dialogHelperBtnOk" type="submit" uxp-variant="cta">${options.okButtonText || 'Ok'}</button>`;
 
             form.appendChild(footer);
-            dialog.appendChild(form);
-            document.body.appendChild(dialog);
 
             function onsubmit() {
                 let returnValue = {};
@@ -120,6 +118,9 @@ class DialogHelper {
 
             form.onsubmit = onsubmit;
 
+            dialog.appendChild(form);
+            document.body.appendChild(dialog);
+
             const cancelButton = document.querySelector("#" + id + "-dialogHelperBtnCancel");
             cancelButton.addEventListener("click", () => dialog.close('reasonCanceled'));
 
@@ -141,7 +142,22 @@ class DialogHelper {
 
             const result = await dialog.showModal();
             if (result !== 'reasonCanceled') {
-                resolve(result);
+                let returnValue = {};
+                for (let key in elements) {
+                    if (elements.hasOwnProperty(key)) {
+                        const element = elements[key];
+
+                        if (element.input) {
+                            if (element.input.type === 'checkbox') {
+                                returnValue[key] = element.input.checked;
+                            } else {
+                                returnValue[key] = element.input.value || '';
+                            }
+                        }
+                    }
+                }
+
+                resolve(returnValue);
             } else {
                 reject(`Dialog '${id}' got canceled by the user`);
             }
