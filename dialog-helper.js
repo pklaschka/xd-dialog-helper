@@ -1,5 +1,5 @@
 /*
- * dialog-helper.js v0.9.2
+ * dialog-helper.js v0.9.3
  * Copyright (c) 2018. by Pablo Klaschka
  */
 
