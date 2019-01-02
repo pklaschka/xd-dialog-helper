@@ -98,22 +98,7 @@ class DialogHelper {
             form.appendChild(footer);
 
             function onsubmit() {
-                let returnValue = {};
-                for (let key in elements) {
-                    if (elements.hasOwnProperty(key)) {
-                        const element = elements[key];
-
-                        if (element.input) {
-                            if (element.input.type === 'checkbox') {
-                                returnValue[key] = element.input.checked;
-                            } else {
-                                returnValue[key] = element.input.value || '';
-                            }
-                        }
-                    }
-                }
-
-                dialog.close(returnValue);
+                dialog.close('ok');
             }
 
             form.onsubmit = onsubmit;
