@@ -111,6 +111,24 @@ describe('Dialog-Helper', () => {
             });
             document.getElementById('b-dialogHelperBtnOk').click();
         });
+        it('should resolve correctly with a value of 0', async done => {
+            DialogHelper.showDialog('b', 'abc', [
+                {
+                    type: DialogHelper.SELECT,
+                    id: 'select',
+                    label: 'Text',
+                    value: 0,
+                    options: [
+                        {value: 0, label: 'Option 1'},
+                        {value: 1, label: 'Option 2'},
+                    ]
+                }
+            ], {}).then(value => {
+                expect(value).toEqual({select: '0'});
+                done();
+            });
+            document.getElementById('b-dialogHelperBtnOk').click();
+        });
         it('should initially select the correct element', async done => {
             DialogHelper.showDialog('b', 'abc', [
                 {
@@ -147,6 +165,45 @@ describe('Dialog-Helper', () => {
             });
             expect(document.getElementById('b-select').children.length).toBe(2);
             document.getElementById('b-dialogHelperBtnOk').click();
+        });
+    });
+
+    describe('slider', function () {
+        it('should behave correctly if the slider has a value of 0', async function (done) {
+            DialogHelper.showDialog('slider', 'abc', [
+                {
+                    type: DialogHelper.SLIDER,
+                    id: 'slider',
+                    label: 'Slider',
+                    value: 0,
+                    htmlAttributes: {
+                        min: 0,
+                        max: 20
+                    }
+                }
+            ], {}).then(value => {
+                expect(value).toEqual({slider: 0});
+                done();
+            });
+            document.getElementById('slider-dialogHelperBtnOk').click();
+        });
+        it('should behave correctly if the slider has a positive value', async function (done) {
+            DialogHelper.showDialog('slider', 'abc', [
+                {
+                    type: DialogHelper.SLIDER,
+                    id: 'slider',
+                    label: 'Slider',
+                    value: 10,
+                    htmlAttributes: {
+                        min: 0,
+                        max: 20
+                    }
+                }
+            ], {}).then(value => {
+                expect(value).toEqual({slider: 10});
+                done();
+            });
+            document.getElementById('slider-dialogHelperBtnOk').click();
         });
     });
 
