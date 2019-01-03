@@ -136,8 +136,11 @@ class DialogHelper {
                         if (element.input) {
                             if (element.input.type === 'checkbox') {
                                 returnValue[key] = element.input.checked;
+                            } else if (element.input.type === 'range') {
+                                // Numerical values
+                                returnValue[key] = Number(element.input.value);
                             } else {
-                                returnValue[key] = element.input.value || '';
+                                returnValue[key] = element.input.value === undefined ? '' : element.input.value;
                             }
                         }
                     }
@@ -167,7 +170,7 @@ class DialogHelper {
                         if (element.input.type === 'checkbox') {
                             returnValue[key] = element.input.checked;
                         } else {
-                            returnValue[key] = element.input.value || '';
+                            returnValue[key] = element.input.value === undefined ? '' : element.input.value;
                         }
                     }
                 }
