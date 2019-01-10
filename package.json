@@ -1,6 +1,6 @@
 {
   "name": "xd-dialog-helper",
-  "version": "0.9.4",
+  "version": "0.9.5",
   "description": "An abstraction layer making it easier to display simple dialogs in plugins for Adobe XD CC",
   "main": "dialog-helper.js",
   "scripts": {
