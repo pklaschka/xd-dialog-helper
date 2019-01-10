@@ -121,7 +121,7 @@ class DialogHelper {
             });
 
             if (options.onBeforeShow)
-                options.onBeforeShow(dialog, elements.map(value => value.input ? value.input : value.wrapper));
+                options.onBeforeShow(dialog, elements);
 
             if (options.onValidate)
                 this.setupValidation(elements, okButton, options.onValidate);
