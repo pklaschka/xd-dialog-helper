@@ -10,7 +10,8 @@ class DialogHelper {
      * A callback that gets triggered before the dialog gets shown, but after all contents got generated. You can – e.g., – manually adjust things here.
      * @callback onBeforeShowCallback
      * @param {HTMLDialogElement} dialogElement The dialog element that gets shown
-     * @param {Object<HTMLElement>} elements The dialog's elements in a key-value based manner (the key corresponds to the name of an input).
+     * @param {{wrapper, input?}[]} elements The dialog's elements in a key-value based manner (the key corresponds to the name of an input).,
+     * @param {{close, cancel}} actions Dialog actions that can get triggered
      */
 
     /**
@@ -121,7 +122,13 @@ class DialogHelper {
             });
 
             if (options.onBeforeShow)
-                options.onBeforeShow(dialog, elements.map(value => value.input ? value.input : value.wrapper));
+                options.onBeforeShow(dialog, elements, {
+                    cancel: () => dialog.close('reasonCanceled'),
+                    close: () => {
+                        if (!okButton.disabled)
+                            onsubmit();
+                    }
+                });
 
             if (options.onValidate)
                 this.setupValidation(elements, okButton, options.onValidate);
@@ -155,7 +162,7 @@ class DialogHelper {
 
     /**
      * Setting up validation of the dialog
-     * @param {Array<Object<{wrapper:HTMLElement, input: HTMLElement}>>} elements The elements
+     * @param {Array<Object<{wrapper: HTMLElement, input: HTMLElement}>>} elements The elements
      * @param {HTMLButtonElement} okButton The ok button (gets disabled if form is invalid)
      * @param {onValidationCallback} validationFunction
      */
@@ -184,11 +191,14 @@ class DialogHelper {
                 if (elements.hasOwnProperty(key)) {
                     let element = elements[key];
 
-                    element.input.addEventListener('change', () => {
-                        okButton.disabled = !validationFunction(
-                            values(elements)
-                        );
-                    })
+                    if (element.hasOwnProperty('input')) {
+                        element.input.addEventListener('change', () => {
+                            okButton.disabled = !validationFunction(values(elements));
+                        });
+                        element.input.addEventListener('input', () => {
+                            okButton.disabled = !validationFunction(values(elements));
+                        });
+                    }
                 }
             }
 
@@ -259,7 +269,7 @@ class DialogHelper {
         }
         header.id = contentElement.id;
 
-        return {wrapper: header};
+        return { wrapper: header };
     }
 
     /**
@@ -277,7 +287,7 @@ class DialogHelper {
         }
         paragraph.id = contentElement.id;
 
-        return {wrapper: paragraph};
+        return { wrapper: paragraph };
     }
 
     /**
@@ -294,7 +304,7 @@ class DialogHelper {
         }
         rule.id = contentElement.id;
 
-        return {wrapper: rule};
+        return { wrapper: rule };
     }
 
     /**
@@ -325,7 +335,7 @@ class DialogHelper {
         if (contentElement.value !== undefined)
             input.value = contentElement.value;
 
-        return {wrapper: inputWrapper, input: input};
+        return { wrapper: inputWrapper, input: input };
     }
 
     /**
@@ -381,7 +391,7 @@ class DialogHelper {
         if (contentElement.value !== undefined)
             slider.value = contentElement.value;
 
-        return {wrapper: sliderWrapper, input: slider}
+        return { wrapper: sliderWrapper, input: slider }
     }
 
     /**
@@ -411,7 +421,7 @@ class DialogHelper {
         if (contentElement.value !== undefined)
             textarea.value = contentElement.value;
 
-        return {wrapper: textareaWrapper, input: textarea};
+        return { wrapper: textareaWrapper, input: textarea };
     }
 
     /**
@@ -422,7 +432,7 @@ class DialogHelper {
     static parseCheckbox(contentElement) {
         const checkboxWrapper = document.createElement("label");
         checkboxWrapper.id = contentElement.id + '-wrapper';
-        Object.assign(checkboxWrapper.style, {flexDirection: "row", alignItems: "center"});
+        Object.assign(checkboxWrapper.style, { flexDirection: "row", alignItems: "center" });
 
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
@@ -447,7 +457,7 @@ class DialogHelper {
             checkbox.checked = contentElement.value === true;
         }
 
-        return {wrapper: checkboxWrapper, input: checkbox};
+        return { wrapper: checkboxWrapper, input: checkbox };
     }
 
     /**
@@ -486,7 +496,7 @@ class DialogHelper {
         if (contentElement.value !== undefined)
             select.value = contentElement.value;
 
-        return {wrapper: selectWrapper, input: select};
+        return { wrapper: selectWrapper, input: select };
     }
 
 
