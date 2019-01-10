@@ -162,7 +162,7 @@ class DialogHelper {
 
     /**
      * Setting up validation of the dialog
-     * @param {Array<{wrapper:HTMLElement, input: HTMLElement}>} elements The elements
+     * @param {Array<Object<{wrapper: HTMLElement, input: HTMLElement}>>} elements The elements
      * @param {HTMLButtonElement} okButton The ok button (gets disabled if form is invalid)
      * @param {onValidationCallback} validationFunction
      */
