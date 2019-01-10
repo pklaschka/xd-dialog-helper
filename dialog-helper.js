@@ -10,7 +10,8 @@ class DialogHelper {
      * A callback that gets triggered before the dialog gets shown, but after all contents got generated. You can – e.g., – manually adjust things here.
      * @callback onBeforeShowCallback
      * @param {HTMLDialogElement} dialogElement The dialog element that gets shown
-     * @param {Object<HTMLElement>} elements The dialog's elements in a key-value based manner (the key corresponds to the name of an input).
+     * @param {{wrapper, input?}[]} elements The dialog's elements in a key-value based manner (the key corresponds to the name of an input).
+     * @param {{close, cancel}} actions Dialog actions that can get triggered
      */
 
     /**
@@ -121,7 +122,10 @@ class DialogHelper {
             });
 
             if (options.onBeforeShow)
-                options.onBeforeShow(dialog, elements);
+                options.onBeforeShow(dialog, elements, {
+                    cancel: () => dialog.close('reasonCanceled'),
+                    close: onsubmit
+                });
 
             if (options.onValidate)
                 this.setupValidation(elements, okButton, options.onValidate);
