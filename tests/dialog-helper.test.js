@@ -16,7 +16,7 @@ describe('Dialog-Helper', () => {
             if (value !== 'reasonCanceled')
                 resolver(value);
             else
-                rejector(value)
+                rejector(value);
         };
     });
 
@@ -40,7 +40,7 @@ describe('Dialog-Helper', () => {
             });
             expect(document.getElementById('a-cb').checked).toBeTruthy();
             document.getElementById('a-dialogHelperBtnOk').click();
-        })
+        });
 
         it('should be able to process changed values', async done => {
             DialogHelper.showDialog('a', 'abc', [
@@ -53,7 +53,7 @@ describe('Dialog-Helper', () => {
             document.getElementById('a-cb').click();
             expect(document.getElementById('a-cb').checked).toBeFalsy();
             document.getElementById('a-dialogHelperBtnOk').click();
-        })
+        });
     });
 
     describe('simple dialog with one textfield (\'#txt\')', () => {
@@ -76,7 +76,7 @@ describe('Dialog-Helper', () => {
             });
             expect(document.getElementById('b-txt').value).toBe('Hello World');
             document.getElementById('b-dialogHelperBtnOk').click();
-        })
+        });
 
         it('should be able to process changed values', async done => {
             DialogHelper.showDialog('b', 'abc', [
@@ -89,7 +89,7 @@ describe('Dialog-Helper', () => {
             document.getElementById('b-txt').value += '!';
             expect(document.getElementById('b-txt').value).toBe('Hello World!');
             document.getElementById('b-dialogHelperBtnOk').click();
-        })
+        });
     });
 
     describe('simple dialog with one select box (\'#select\')', () => {
