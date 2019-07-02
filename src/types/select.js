@@ -3,15 +3,15 @@
  * @type ContentElementType
  */
 const SELECT = {
-    render: (props, actions) => {
+    render: (dialogId, props, actions) => {
         const wrapper = document.createElement('label');
-        wrapper.id = props.id + '-wrapper';
+        wrapper.id = `${dialogId}-${props.id}` + '-wrapper';
         const selectLabel = document.createElement('span');
-        selectLabel.id = props.id + '-label';
+        selectLabel.id = `${dialogId}-${props.id}` + '-label';
         selectLabel.innerHTML = props.label;
         wrapper.appendChild(selectLabel);
         const input = document.createElement('select');
-        input.id = props.id;
+        input.id = `${dialogId}-${props.id}`;
 
         for (let entry of props.options) {
             let optEntry = document.createElement('option');

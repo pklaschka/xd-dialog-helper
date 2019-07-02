@@ -3,7 +3,7 @@
  * @type {ContentElementType}
  */
 const HR = {
-    render: (props) => {
+    render: (dialogId, props) => {
         const rule = document.createElement('hr');
         if (props.htmlAttributes) {
             for (let name in props.htmlAttributes) {
@@ -11,7 +11,7 @@ const HR = {
                     rule.setAttribute(name, props.htmlAttributes[name]);
             }
         }
-        rule.id = props.id;
+        rule.id = `${dialogId}-${props.id}`;
 
         return {
             wrapper: rule,

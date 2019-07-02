@@ -2,15 +2,15 @@
  * A simple, single-line text input element
  * @type ContentElementType
  */
-const INPUT = {
-    render: (props, actions) => {
+const TEXT_INPUT = {
+    render: (dialogId, props, actions) => {
         let wrapper = document.createElement('label');
-        wrapper.id = props.id + '-wrapper';
+        wrapper.id = `${dialogId}-${props.id}` + '-wrapper';
         const input = document.createElement('input');
-        input.id = props.id;
+        input.id = `${dialogId}-${props.id}`;
         input.placeholder = props.label;
         const inputLabel = document.createElement('span');
-        inputLabel.id = props.id + '-label';
+        inputLabel.id = `${dialogId}-${props.id}` + '-label';
         inputLabel.innerHTML = props.label + '<br>';
         wrapper.appendChild(inputLabel);
         wrapper.appendChild(input);
@@ -30,7 +30,7 @@ const INPUT = {
         return {
             wrapper,
             input,
-            type: INPUT,
+            type: TEXT_INPUT,
             props
         };
     },
@@ -46,4 +46,4 @@ const INPUT = {
     type: 'Input'
 };
 
-module.exports = INPUT;
+module.exports = TEXT_INPUT;

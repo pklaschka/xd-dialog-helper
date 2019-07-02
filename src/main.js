@@ -9,7 +9,7 @@ const isValid = require('./validation-function');
  * @param {dialogOptions} [options={}] Additional options for the dialog
  * @return {Promise<*>} Promise, which resolves with the form values or rejects if the dialog gets canceled
  */
-async function showDialog(id, title, contents, options = {}) {
+async function showDialog(id, title, contents = [], options = {}) {
     const dialog = document.createElement('dialog');
     dialog.id = `${id}-dialog`;
     dialog.innerHTML = `
@@ -39,8 +39,8 @@ async function showDialog(id, title, contents, options = {}) {
 
     const main = dialog.querySelector('main');
     const form = dialog.querySelector('form');
-    const btnOk = dialog.querySelector(`${id}-dialogHelperBtnOk`);
-    const btnCancel = dialog.querySelector(`${id}-dialogHelperBtnCancel`);
+    const btnOk = dialog.querySelector(`#${id}-dialogHelperBtnOk`);
+    const btnCancel = dialog.querySelector(`#${id}-dialogHelperBtnCancel`);
 
     /**
      * @type {ContentElement[]}
@@ -57,7 +57,7 @@ async function showDialog(id, title, contents, options = {}) {
     const actionList = {
         close: () => {
             if (!btnOk.disabled)
-                dialog.close(JSON.stringify(this.values()));
+                dialog.close(JSON.stringify(actionList.values()));
         },
         cancel: () => {
             dialog.close('reasonCanceled');
@@ -70,7 +70,7 @@ async function showDialog(id, title, contents, options = {}) {
             return returnValues;
         },
         change: () => {
-            btnOk.disabled = !isValid(elements, this.values(), options.onValidate);
+            btnOk.disabled = !isValid(elements, actionList.values(), options.onValidate);
         },
         /**
          * @param {ContentElement} element The element that gets registered
@@ -97,7 +97,7 @@ async function showDialog(id, title, contents, options = {}) {
          * @return {ContentElement} The content element for the declared element
          */
         content => {
-            let value = content.type.render(content, actionList);
+            let value = content.type.render(id, content, actionList);
             value['props'] = content; // Make sure to include props in the ContentElement
             value['type'] = content.type; // Make sure to include the type in the ContentElement
             return value;
@@ -116,6 +116,8 @@ async function showDialog(id, title, contents, options = {}) {
 
     if (options.onBeforeShow)
         await options.onBeforeShow(dialog, elements, actionList);
+
+    actionList.change(); // Validate initial dialog state
 
     const results = await dialog.showModal();
     // ... and handle results:

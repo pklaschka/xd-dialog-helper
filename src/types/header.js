@@ -3,7 +3,7 @@
  * @type {ContentElementType}
  */
 const HEADER = {
-    render: (props) => {
+    render: (dialogId, props) => {
         const header = document.createElement('h2');
         header.innerHTML = props.label;
         if (props.htmlAttributes) {
@@ -12,7 +12,7 @@ const HEADER = {
                     header.setAttribute(name, props.htmlAttributes[name]);
             }
         }
-        header.id = props.id;
+        header.id = `${dialogId}-${props.id}`;
 
         return {
             wrapper: header,

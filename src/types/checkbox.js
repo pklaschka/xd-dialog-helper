@@ -3,19 +3,19 @@
  * @type ContentElementType
  */
 const CHECKBOX = {
-    render: (props, actions) => {
+    render: (dialogId, props, actions) => {
         const wrapper = document.createElement('label');
-        wrapper.id = props.id + '-wrapper';
+        wrapper.id = `${dialogId}-${props.id}` + '-wrapper';
         Object.assign(wrapper.style, {flexDirection: 'row', alignItems: 'center'});
 
         const input = document.createElement('input');
         input.type = 'checkbox';
-        input.id = props.id;
+        input.id = `${dialogId}-${props.id}`;
         input.placeholder = props.label;
 
         wrapper.appendChild(input);
         const checkboxLabel = document.createElement('span');
-        checkboxLabel.id = props.id + '-label';
+        checkboxLabel.id = `${dialogId}-${props.id}` + '-label';
         checkboxLabel.innerHTML = props.label;
         wrapper.appendChild(checkboxLabel);
 

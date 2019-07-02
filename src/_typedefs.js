@@ -10,8 +10,8 @@
 
 /**
  * @typedef ContentElementType
- * @property {function(props: ContentElementDeclaration, actions: ActionList): ContentElement} render Render the
- * ContentElement
+ * @property {function(dialogId: string, props: ContentElementDeclaration, actions: ActionList): ContentElement} render
+ * Render the ContentElement
  * @property {function(ContentElement: ContentElement): *} value Get the value of the passed ContentElement
  * @property {function(ContentElement: ContentElement): boolean} valid Checks if input of the given ContentElement is
  * valid

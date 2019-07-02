@@ -3,7 +3,7 @@
  * @type ContentElementType
  */
 const SLIDER = {
-    render: (props, actions) => {
+    render: (dialogId, props, actions) => {
         if (
             props.htmlAttributes === undefined ||
             (props.htmlAttributes.value === undefined && props.value === undefined) ||
@@ -17,14 +17,14 @@ const SLIDER = {
         }
 
         const wrapper = document.createElement('label');
-        wrapper.id = props.id + '-wrapper';
+        wrapper.id = `${dialogId}-${props.id}` + '-wrapper';
 
         const label = document.createElement('span');
         label.textContent = props.label;
-        label.id = props.id + '-label';
+        label.id = `${dialogId}-${props.id}` + '-label';
 
         const displayValue = document.createElement('span');
-        displayValue.id = props.id + '-value-label';
+        displayValue.id = `${dialogId}-${props.id}` + '-value-label';
         displayValue.textContent = (props.htmlAttributes.value || props.value) + (props.unit || '');
 
         const labelAndDisplay = document.createElement('div');
@@ -34,7 +34,7 @@ const SLIDER = {
         labelAndDisplay.appendChild(displayValue);
 
         const input = document.createElement('input');
-        input.id = props.id;
+        input.id = `${dialogId}-${props.id}`;
         input.setAttribute('type', 'range');
 
         input.addEventListener('input',
@@ -66,7 +66,7 @@ const SLIDER = {
     valid: () => {
         return true;
     },
-    value: (element) => element.input.value,
+    value: (element) => Number.parseFloat(element.input.value),
     type: 'Slider'
 };
 

@@ -3,14 +3,14 @@
  * @type ContentElementType
  */
 const TEXTAREA = {
-    render: (props, actions) => {
+    render: (dialogId, props, actions) => {
         let wrapper = document.createElement('label');
-        wrapper.id = props.id + '-wrapper';
+        wrapper.id = `${dialogId}-${props.id}` + '-wrapper';
         const input = document.createElement('textarea');
-        input.id = props.id;
+        input.id = `${dialogId}-${props.id}`;
         input.placeholder = props.label;
         const textareaLabel = document.createElement('span');
-        textareaLabel.id = props.id + '-label';
+        textareaLabel.id = `${dialogId}-${props.id}` + '-label';
         textareaLabel.innerHTML = props.label + '<br>';
         wrapper.appendChild(textareaLabel);
         wrapper.appendChild(input);

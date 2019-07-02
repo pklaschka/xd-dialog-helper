@@ -3,7 +3,7 @@
  * @type {ContentElementType}
  */
 const TEXT = {
-    render: (props) => {
+    render: (dialogId, props) => {
         const paragraph = document.createElement('p');
         paragraph.innerHTML = props.label;
         if (props.htmlAttributes) {
@@ -12,7 +12,7 @@ const TEXT = {
                     paragraph.setAttribute(name, props.htmlAttributes[name]);
             }
         }
-        paragraph.id = props.id;
+        paragraph.id = `${dialogId}-${props.id}`;
 
         return {
             wrapper: paragraph,

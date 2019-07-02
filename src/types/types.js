@@ -2,7 +2,7 @@ module.exports = {
     CHECKBOX: require('./checkbox'),
     HEADER: require('./header'),
     HR: require('./hr'),
-    INPUT: require('./input'),
+    TEXT_INPUT: require('./input'),
     SLIDER: require('./slider'),
     TEXT: require('./text'),
     TEXT_AREA: require('./textarea'),
