@@ -106,7 +106,7 @@ declare module 'xd-dialog-helper' {
         /**
          * The element type's name (gets used for console output etc.)
          */
-        readonly name: string;
+        readonly type: string;
     }
 
     /**
