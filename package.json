@@ -6,7 +6,7 @@
   "types": "dialog-helper.d.ts",
   "scripts": {
     "build": "webpack --config webpack.config.js --mode production",
-    "prepublish": "npm run build",
+    "prepare": "npm run build",
     "pretest": "npm run build",
     "test": "jest --coverage",
     "lint": "eslint src/"
@@ -39,9 +39,9 @@
   },
   "homepage": "https://github.com/pklaschka/xd-dialog-helper#readme",
   "devDependencies": {
-    "eslint": "^5.10.0",
-    "jest": "^23.6.0",
-    "webpack": "^4.27.1",
-    "webpack-cli": "^3.1.2"
+    "eslint": "^6.0.1",
+    "jest": "^24.8.0",
+    "webpack": "^4.35.2",
+    "webpack-cli": "^3.3.5"
   }
 }
