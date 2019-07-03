@@ -2,7 +2,7 @@ declare module 'xd-dialog-helper' {
     /**
      * A list of actions that can get performed for the dialog
      */
-    interface ActionList {
+    export interface ActionList {
         /**
          * close submit dialog if valid
          */
@@ -33,7 +33,7 @@ declare module 'xd-dialog-helper' {
     /**
      * The parsed element, coming from the element types render function. Contains view and model information about the element.
      */
-    interface ContentElement {
+    export interface ContentElement {
         /**
          * The wrapper (or outer-most) HTML element specific to the content element
          */
@@ -55,7 +55,7 @@ declare module 'xd-dialog-helper' {
     /**
      * A declaration for a content element which gets passed to the `showDialog()` function.
      */
-    interface ContentElementDeclaration {
+    export interface ContentElementDeclaration {
         /**
          * The unique id of the element. Will also get used for HTML element ids
          */
@@ -78,88 +78,10 @@ declare module 'xd-dialog-helper' {
         htmlAttributes: object;
     }
 
-    interface CheckboxType extends ContentElementType {
-    }
-
-    interface CheckboxDeclaration extends ContentElementDeclaration {
-        type: CheckboxType;
-        value?: boolean;
-        required?: boolean;
-    }
-
-    interface TextInputType extends ContentElementType {
-    }
-
-    interface TextInputDeclaration extends ContentElementDeclaration {
-        type: TextInputType;
-        value?: string;
-        required?: boolean;
-    }
-
-    interface TextAreaType extends ContentElementType {
-    }
-
-    interface TextAreaDeclaration extends ContentElementDeclaration {
-        type: TextAreaType;
-        value?: string;
-        required?: boolean;
-    }
-
-    interface SelectType extends ContentElementType {
-    }
-
-    interface SelectDeclaration extends ContentElementDeclaration {
-        type: SelectType;
-        options: { value: string, label: string }[];
-        value?: string;
-    }
-
-    interface SliderType extends ContentElementType {
-
-    }
-
-    interface SliderDeclaration extends ContentElementDeclaration {
-        type: SliderType,
-        value: number,
-        htmlAttributes: {
-            min: number,
-            max: number,
-            step?: number
-        }
-        unit?: string;
-    }
-
-    interface HeaderType extends ContentElementType {
-    }
-
-    interface HeaderDeclaration extends ContentElementDeclaration {
-        type: HeaderType;
-        value: undefined;
-        required: undefined;
-    }
-
-    interface TextType extends ContentElementType {
-    }
-
-    interface TextDeclaration extends ContentElementDeclaration {
-        type: TextType;
-        value: undefined;
-        required: undefined;
-    }
-
-    interface HRType extends ContentElementType {
-    }
-
-    interface HRDeclaration extends ContentElementDeclaration {
-        type: HRType;
-        value: undefined;
-        required: undefined;
-    }
-
     /**
      * A content element type. Defines how an element should behave, render etc.
      */
-    interface ContentElementType {
+    export interface ContentElementType {
         /**
          * Parses the content element declaration – passed as `props` and converts it into an actual content element (including its UI elements like `wrapper` etc.)
          * @param dialogId The dialogs id, should get used as a prefix for elements: `[dialog-id]-[element-id]-[...]`
@@ -195,7 +117,7 @@ declare module 'xd-dialog-helper' {
      * @param options Additional options
      * @returns {Promise<object>} Promise that resolves with the dialog values in a key-value-pair form (as an object) or rejects if the user cancels the dialog
      */
-    function showDialog(
+    export function showDialog(
         id: string,
         title: string,
         contents?: ContentElementDeclaration[],
@@ -242,42 +164,42 @@ declare module 'xd-dialog-helper' {
      * @deprecated Using the types from the `dialog-helper` class directly is deprecated and will get removed in v1.0.
      * Use `require('xd-dialog-helper').types.CHECKBOX` instead.
      */
-    const CHECKBOX: CheckboxType;
+    export const CHECKBOX: ContentElementType;
     /**
      * @deprecated Using the types from the `dialog-helper` class directly is deprecated and will get removed in v1.0.
      * Use `require('xd-dialog-helper').types.HEADER` instead.
      */
-    const HEADER: HeaderType;
+    export const HEADER: ContentElementType;
     /**
      * @deprecated Using the types from the `dialog-helper` class directly is deprecated and will get removed in v1.0.
      * Use `require('xd-dialog-helper').types.HR` instead.
      */
-    const HR: HRType;
+    export const HR: ContentElementType;
     /**
      * @deprecated Using the types from the `dialog-helper` class directly is deprecated and will get removed in v1.0.
      * Use `require('xd-dialog-helper').types.SELECT` instead.
      */
-    const SELECT: SelectType;
+    export const SELECT: ContentElementType;
     /**
      * @deprecated Using the types from the `dialog-helper` class directly is deprecated and will get removed in v1.0.
      * Use `require('xd-dialog-helper').types.SLIDER` instead.
      */
-    const SLIDER: SliderType;
+    export const SLIDER: ContentElementType;
     /**
      * @deprecated Using the types from the `dialog-helper` class directly is deprecated and will get removed in v1.0.
      * Use `require('xd-dialog-helper').types.TEXT` instead.
      */
-    const TEXT: TextType;
+    export const TEXT: ContentElementType;
     /**
      * @deprecated Using the types from the `dialog-helper` class directly is deprecated and will get removed in v1.0.
      * Use `require('xd-dialog-helper').types.TEXT_AREA` instead.
      */
-    const TEXT_AREA: TextAreaType;
+    export const TEXT_AREA: ContentElementType;
     /**
      * @deprecated Using the types from the `dialog-helper` class directly is deprecated and will get removed in v1.0.
      * Use `require('xd-dialog-helper').types.TEXT_INPUT` instead.
      */
-    const TEXT_INPUT: TextInputType;
+    export const TEXT_INPUT: ContentElementType;
 
     interface types {
         /**
@@ -292,7 +214,7 @@ declare module 'xd-dialog-helper' {
          * - `htmlAttributes: object` – get applied to the `<input type="checkbox">` element
          * - `required: boolean` – determines if checkbox must be checked for the element to be valid (default: `false`)
          */
-        CHECKBOX: CheckboxType;
+        CHECKBOX: ContentElementType;
         /**
          * A headline element
          *
@@ -303,7 +225,7 @@ declare module 'xd-dialog-helper' {
          * ### Supported props
          * - `htmlAttributes: object` – get applied to the `<h2>` element
          */
-        HEADER: HeaderType;
+        HEADER: ContentElementType;
         /**
          * A horizontal rule (`<hr>`) element
          *
@@ -313,28 +235,28 @@ declare module 'xd-dialog-helper' {
          * ### Supported props
          * - `htmlAttributes: object` – get applied to the `<hr>` element
          */
-        HR: HRType;
+        HR: ContentElementType;
         /**
          * A selection/dropdown element
          */
-        SELECT: SelectType;
+        SELECT: ContentElementType;
         /**
          * A numeric value slider element
          */
-        SLIDER: SliderType;
+        SLIDER: ContentElementType;
         /**
          * A (static) text element
          */
-        TEXT: TextType;
+        TEXT: ContentElementType;
         /**
          * A text area input element
          */
-        TEXT_AREA: TextAreaType;
+        TEXT_AREA: ContentElementType;
         /**
          * A (single-line) text input element
          */
-        TEXT_INPUT: TextInputType;
+        TEXT_INPUT: ContentElementType;
     }
 
-    const types: types;
+    export const types: types;
 }
