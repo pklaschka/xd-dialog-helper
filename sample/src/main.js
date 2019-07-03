@@ -3,16 +3,16 @@ const DialogHelper = require('xd-dialog-helper');
 function showModal() {
     DialogHelper.showDialog('test', 'Test Plugin', [
         {
-            type: DialogHelper.HR,
-            id: 'hr',
+            type: DialogHelper.types.HR,
+            id: 'hr'
         },
         {
-            type: DialogHelper.TEXT,
+            type: DialogHelper.types.TEXT,
             id: 'moin',
             label: 'test'
         },
         {
-            type: DialogHelper.SELECT,
+            type: DialogHelper.types.SELECT,
             id: 'whichOption',
             label: 'Choose an option:',
             options: [
@@ -28,18 +28,18 @@ function showModal() {
             value: 'opt1'
         },
         {
-            type: DialogHelper.TEXT_INPUT,
+            type: DialogHelper.types.TEXT_INPUT,
             id: 'txtInput',
             label: 'Some text input:',
             value: 'Initial Value'
         },
         {
-            type: DialogHelper.HEADER,
+            type: DialogHelper.types.HEADER,
             id: 'headline',
             label: 'Some more stuff'
         },
         {
-            type: DialogHelper.SLIDER,
+            type: DialogHelper.types.SLIDER,
             id: 'slider',
             label: 'A slider for something',
             htmlAttributes: {
@@ -50,13 +50,13 @@ function showModal() {
             value: 10
         },
         {
-            type: DialogHelper.TEXT_AREA,
+            type: DialogHelper.types.TEXT_AREA,
             id: 'textArea',
             label: 'Message',
             value: 'Some text \n With new lines'
         },
         {
-            type: DialogHelper.CHECKBOX,
+            type: DialogHelper.types.CHECKBOX,
             id: 'cb',
             label: 'I accept the terms and conditions',
             value: true
