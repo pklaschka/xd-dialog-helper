@@ -36,7 +36,7 @@ const TEXT_INPUT = {
     },
     valid: (element) => {
         if (element.props.required) {
-            const value = this.value(element);
+            const value = TEXT_INPUT.value(element);
             return value.length > 0;
         } else {
             return true;

@@ -45,7 +45,7 @@ const CHECKBOX = {
     },
     valid: (element) => {
         if (element.props.required) {
-            return this.value(element);
+            return CHECKBOX.value(element);
         } else {
             return true;
         }

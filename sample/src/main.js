@@ -59,7 +59,8 @@ function showModal() {
             type: DialogHelper.types.CHECKBOX,
             id: 'cb',
             label: 'I accept the terms and conditions',
-            value: true
+            value: true,
+            required: true
         },
     ], {
         okButtonText: 'Insert',

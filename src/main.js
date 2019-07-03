@@ -13,28 +13,21 @@ async function showDialog(id, title, contents = [], options = {}) {
     const dialog = document.createElement('dialog');
     dialog.id = `${id}-dialog`;
     dialog.innerHTML = `
-    <style>
-        dialog#${id} {
-                width: ${options.width || 360}px;
-        }
+<style>
+    dialog#${id} {
+            width: ${options.width || 360}px;
+    }
         
-        ${options.css}
-    </style>
-    <form method="dialog">
-        <header>
-            <h1>${title}</h1>
-            <hr>
-        </header>
-        <main></main>
-        <footer>
-            <button id="${id}-dialogHelperBtnCancel" uxp-variant="primary">
-                ${options.cancelButtonText || 'Cancel'}
-            </button>
-            <button id="${id}-dialogHelperBtnOk" type="submit" uxp-variant="cta">
-                ${options.okButtonText || 'Ok'}
-            </button>
-        </footer>
-    </form>
+    ${options.css}
+</style>
+<form method="dialog">
+<header><h1>${title}</h1><hr></header>
+<main></main>
+<footer>
+<button id="${id}-dialogHelperBtnCancel" uxp-variant="primary">${options.cancelButtonText || 'Cancel'}</button>
+<button id="${id}-dialogHelperBtnOk" type="submit" uxp-variant="cta">${options.okButtonText || 'Ok'}</button>
+</footer>
+</form>
     `;
 
     const main = dialog.querySelector('main');

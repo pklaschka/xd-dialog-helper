@@ -36,7 +36,7 @@ const TEXTAREA = {
     },
     valid: (element) => {
         if (element.props.required) {
-            const value = this.value(element);
+            const value = TEXTAREA.value(element);
             return value.length > 0;
         } else {
             return true;
