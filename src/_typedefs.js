@@ -31,7 +31,7 @@
  * by {@link ContentElementType.render}
  * @property {HTMLElement} wrapper The wrapper that gets inserted when the ContentElement gets rendered
  * @property {ContentElementType} type The type of the ContentElement
- * @property {object} props Properties of the element
+ * @property {ContentElementDeclaration} props Properties of the element
  * @property {?HTMLElement} input? Input element of the content element, if applicable
  */
 

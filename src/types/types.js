@@ -2,9 +2,9 @@ module.exports = {
     CHECKBOX: require('./checkbox'),
     HEADER: require('./header'),
     HR: require('./hr'),
-    TEXT_INPUT: require('./input'),
+    SELECT: require('./select'),
     SLIDER: require('./slider'),
     TEXT: require('./text'),
     TEXT_AREA: require('./textarea'),
-    SELECT: require('./select'),
+    TEXT_INPUT: require('./input'),
 };

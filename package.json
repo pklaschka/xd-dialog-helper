@@ -1,12 +1,14 @@
 {
   "name": "xd-dialog-helper",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.0",
   "description": "An abstraction layer making it easier to display simple dialogs in plugins for Adobe XD CC",
   "main": "dialog-helper.js",
   "types": "dialog-helper.d.ts",
   "scripts": {
     "build": "webpack --config webpack.config.js --mode production",
-    "test": "npm run build && jest --coverage",
+    "prepublish": "npm run build",
+    "pretest": "npm run build",
+    "test": "jest --coverage",
     "lint": "eslint src/"
   },
   "repository": "github:pklaschka/xd-dialog-helper",
