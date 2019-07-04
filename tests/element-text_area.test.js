@@ -1,4 +1,4 @@
-const textArea = require('../dialog-helper').types.TEXT_AREA;
+const textArea = require('../src/main').types.TEXT_AREA;
 const actions = {
     change: jest.fn(() => undefined),
     values: jest.fn(() => {}),
@@ -10,7 +10,10 @@ const actions = {
 const rendered = textArea.render('dialog', {
     id: 'hr',
     label: 'Hello World',
-    value: 'abc'
+    value: 'abc',
+    htmlAttributes: {
+        someAttr: 'hello'
+    }
 }, actions);
 
 describe('Text Area Element', () => {

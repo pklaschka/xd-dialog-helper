@@ -1,4 +1,4 @@
-const checkbox = require('../dialog-helper').types.CHECKBOX;
+const checkbox = require('../src/main').types.CHECKBOX;
 const actions = {
     change: jest.fn(() => undefined),
     values: jest.fn(() => {}),
@@ -9,7 +9,10 @@ const actions = {
 
 const rendered = checkbox.render('dialog', {
     id: 'hr',
-    label: 'Hello World'
+    label: 'Hello World',
+    htmlAttributes: {
+        someAttr: 'hello'
+    }
 }, actions);
 
 describe('Checkbox Element', () => {

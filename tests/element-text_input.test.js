@@ -1,4 +1,4 @@
-const textInput = require('../dialog-helper').types.TEXT_INPUT;
+const textInput = require('../src/main').types.TEXT_INPUT;
 const actions = {
     change: jest.fn(() => undefined),
     values: jest.fn(() => {}),
@@ -10,7 +10,10 @@ const actions = {
 const rendered = textInput.render('dialog', {
     id: 'hr',
     label: 'Hello World',
-    value: 'abc'
+    value: 'abc',
+    htmlAttributes: {
+        someAttr: 'hello'
+    }
 }, actions);
 
 describe('Text Input Element', () => {

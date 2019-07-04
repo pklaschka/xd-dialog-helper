@@ -1,4 +1,4 @@
-const text = require('../dialog-helper').types.TEXT;
+const text = require('../src/main').types.TEXT;
 const actions = {
     change: jest.fn(() => undefined),
     values: jest.fn(() => {}),
@@ -7,13 +7,17 @@ const actions = {
     registerElement: jest.fn(() => undefined)
 };
 
+const rendered = text.render('dialog', {
+    id: 'hr',
+    label: 'Hello World',
+    htmlAttributes: {
+        someAttr: 'hello'
+    }
+}, actions);
+
 describe('Text Element', () => {
     describe('render()', () => {
         it('should render correctly', () => {
-            const rendered = text.render('dialog', {
-                id: 'hr',
-                label: 'Hello World'
-            }, actions);
             expect(rendered).toMatchSnapshot();
         });
     });

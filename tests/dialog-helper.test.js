@@ -1,4 +1,4 @@
-const DialogHelper = require('../dialog-helper');
+const DialogHelper = require('../src/main');
 
 let resolver, rejector;
 

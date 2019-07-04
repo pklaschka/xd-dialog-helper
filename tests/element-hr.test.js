@@ -1,4 +1,4 @@
-const hr = require('../dialog-helper').types.HR;
+const hr = require('../src/main').types.HR;
 const actions = {
     change: jest.fn(() => undefined),
     values: jest.fn(() => {}),
@@ -7,12 +7,16 @@ const actions = {
     registerElement: jest.fn(() => undefined)
 };
 
+const rendered = hr.render('dialog', {
+    id: 'hr',
+    htmlAttributes: {
+        someAttr: 'hello'
+    }
+}, actions);
+
 describe('HR Element', () => {
     describe('render()', () => {
         it('should render correctly', () => {
-            const rendered = hr.render('dialog', {
-                id: 'hr'
-            }, actions);
             expect(rendered).toMatchSnapshot();
         });
     });

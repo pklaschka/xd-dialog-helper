@@ -7,9 +7,13 @@ Object {
   "input": <input
     id="dialog-hr"
     placeholder="Hello World"
+    someattr="hello"
     type="checkbox"
   />,
   "props": Object {
+    "htmlAttributes": Object {
+      "someAttr": "hello",
+    },
     "id": "hr",
     "label": "Hello World",
   },
@@ -26,6 +30,7 @@ Object {
     <input
       id="dialog-hr"
       placeholder="Hello World"
+      someattr="hello"
       type="checkbox"
     />
     <span

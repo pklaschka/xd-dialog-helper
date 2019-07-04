@@ -1,4 +1,4 @@
-const slider = require('../dialog-helper').types.SLIDER;
+const slider = require('../src/main').types.SLIDER;
 const actions = {
     change: jest.fn(() => undefined),
     values: jest.fn(() => {}),

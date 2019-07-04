@@ -6,6 +6,9 @@ exports[`HR Element render() should render correctly 1`] = `
 Object {
   "input": undefined,
   "props": Object {
+    "htmlAttributes": Object {
+      "someAttr": "hello",
+    },
     "id": "hr",
   },
   "type": Object {
@@ -16,6 +19,7 @@ Object {
   },
   "wrapper": <hr
     id="dialog-hr"
+    someattr="hello"
   />,
 }
 `;

@@ -7,8 +7,12 @@ Object {
   "input": <textarea
     id="dialog-hr"
     placeholder="Hello World"
+    someattr="hello"
   />,
   "props": Object {
+    "htmlAttributes": Object {
+      "someAttr": "hello",
+    },
     "id": "hr",
     "label": "Hello World",
     "value": "abc",
@@ -31,6 +35,7 @@ Object {
     <textarea
       id="dialog-hr"
       placeholder="Hello World"
+      someattr="hello"
     />
   </label>,
 }

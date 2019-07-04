@@ -1,4 +1,4 @@
-const header = require('../dialog-helper').types.HEADER;
+const header = require('../src/main').types.HEADER;
 const actions = {
     change: jest.fn(() => undefined),
     values: jest.fn(() => {}),
@@ -7,13 +7,17 @@ const actions = {
     registerElement: jest.fn(() => undefined)
 };
 
+const rendered = header.render('dialog', {
+    id: 'header',
+    label: 'Hello World',
+    htmlAttributes: {
+        someAttr: 'hello'
+    }
+}, actions);
+
 describe('Header Element', () => {
     describe('render()', () => {
         it('should render correctly', () => {
-            const rendered = header.render('dialog', {
-                id: 'hr',
-                label: 'Hello World'
-            }, actions);
             expect(rendered).toMatchSnapshot();
         });
     });
