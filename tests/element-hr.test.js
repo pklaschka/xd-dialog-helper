@@ -13,10 +13,7 @@ describe('HR Element', () => {
             const rendered = hr.render('dialog', {
                 id: 'hr'
             }, actions);
-            expect(rendered.props).toEqual({
-                id: 'hr'
-            });
-            expect(rendered.wrapper.outerHTML).toBe('<hr id="dialog-hr">');
+            expect(rendered).toMatchSnapshot();
         });
     });
     describe('value()', () => {
@@ -30,6 +27,6 @@ describe('HR Element', () => {
         });
     });
     describe('name', () => {
-        expect(hr.type).toBe('Horizontal Rule');
+        expect(hr.type).toMatchSnapshot();
     });
 });

@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[` 1`] = `"Input"`;
+
+exports[`Text Input Element render() should render correctly 1`] = `
+Object {
+  "input": <input
+    id="dialog-hr"
+    placeholder="Hello World"
+  />,
+  "props": Object {
+    "id": "hr",
+    "label": "Hello World",
+    "value": "abc",
+  },
+  "type": Object {
+    "render": [Function],
+    "type": "Input",
+    "valid": [Function],
+    "value": [Function],
+  },
+  "wrapper": <label
+    id="dialog-hr-wrapper"
+  >
+    <span
+      id="dialog-hr-label"
+    >
+      Hello World
+      <br />
+    </span>
+    <input
+      id="dialog-hr"
+      placeholder="Hello World"
+    />
+  </label>,
+}
+`;

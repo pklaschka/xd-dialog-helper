@@ -14,11 +14,7 @@ describe('Header Element', () => {
                 id: 'hr',
                 label: 'Hello World'
             }, actions);
-            expect(rendered.props).toEqual({
-                id: 'hr',
-                label: 'Hello World'
-            });
-            expect(rendered.wrapper.outerHTML).toBe('<h2 id="dialog-hr">Hello World</h2>');
+            expect(rendered).toMatchSnapshot();
         });
     });
     describe('value()', () => {
@@ -32,6 +28,6 @@ describe('Header Element', () => {
         });
     });
     describe('name', () => {
-        expect(header.type).toBe('Header');
+        expect(header.type).toMatchSnapshot();
     });
 });

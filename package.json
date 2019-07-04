@@ -8,6 +8,7 @@
     "build": "webpack --config webpack.config.js --mode production",
     "prepare": "npm run build",
     "pretest": "npm run build",
+    "update-snapshots": "npm test -- -u",
     "test": "jest --coverage",
     "lint": "eslint src/"
   },

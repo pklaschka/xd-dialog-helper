@@ -14,11 +14,7 @@ describe('Text Element', () => {
                 id: 'hr',
                 label: 'Hello World'
             }, actions);
-            expect(rendered.props).toEqual({
-                id: 'hr',
-                label: 'Hello World'
-            });
-            expect(rendered.wrapper.outerHTML).toBe('<p id="dialog-hr">Hello World</p>');
+            expect(rendered).toMatchSnapshot();
         });
     });
     describe('value()', () => {
@@ -32,6 +28,6 @@ describe('Text Element', () => {
         });
     });
     describe('name', () => {
-        expect(text.type).toBe('Text');
+        expect(text.type).toMatchSnapshot();
     });
 });
