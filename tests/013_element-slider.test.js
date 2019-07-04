@@ -37,6 +37,13 @@ describe('Slider Element', () => {
     describe('value()', () => {
         it('should return the correct numeric value', () => {
             expect(slider.value(rendered)).toBe(5);
+
+            rendered.input.value = '6';
+            rendered.input.dispatchEvent(new Event('input'));
+
+            expect(actions.change).toBeCalled();
+            expect(rendered.wrapper.querySelector('#dialog-slider-value-label').innerHTML).toBe('6cm');
+
         });
     });
     describe('validate()', () => {

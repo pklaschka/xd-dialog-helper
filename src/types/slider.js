@@ -6,7 +6,7 @@ const SLIDER = {
     render: (dialogId, props, actions) => {
         if (
             props.htmlAttributes === undefined ||
-            (props.htmlAttributes.value === undefined && props.value === undefined) ||
+            props.value === undefined ||
             props.htmlAttributes.min === undefined ||
             props.htmlAttributes.max === undefined
         ) {
@@ -24,7 +24,7 @@ const SLIDER = {
         label.id = `${dialogId}-${props.id}` + '-label';
 
         const displayValue = document.createElement('span');
-        displayValue.id = `${dialogId}-${props.id}` + '-value-label';
+        displayValue.id = `${dialogId}-${props.id}-value-label`;
         displayValue.textContent = (props.htmlAttributes.value || props.value) + (props.unit || '');
 
         const labelAndDisplay = document.createElement('div');
@@ -46,14 +46,11 @@ const SLIDER = {
         wrapper.appendChild(labelAndDisplay);
         wrapper.appendChild(input);
 
-        if (props.htmlAttributes) {
-            for (let name in props.htmlAttributes) {
-                input.setAttribute(name, props.htmlAttributes[name]);
-            }
+        for (let name in props.htmlAttributes) {
+            input.setAttribute(name, props.htmlAttributes[name]);
         }
 
-        if (props.value !== undefined)
-            input.value = props.value;
+        input.value = props.value;
 
         return {
             wrapper,
