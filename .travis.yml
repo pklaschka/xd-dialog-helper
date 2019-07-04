@@ -5,6 +5,7 @@ node_js:
 sudo: false
 
 install:
+  - npm install
   - npm install -g coveralls
 
 script:
