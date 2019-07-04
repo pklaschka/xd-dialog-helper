@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[` 1`] = `"Slider"`;
+
+exports[`Slider Element render() should render correctly 1`] = `
+Object {
+  "input": <input
+    id="dialog-slider"
+    max="10"
+    min="1"
+    type="range"
+  />,
+  "props": Object {
+    "htmlAttributes": Object {
+      "max": 10,
+      "min": 1,
+    },
+    "id": "slider",
+    "label": "Move right",
+    "unit": "cm",
+    "value": 5,
+  },
+  "type": Object {
+    "render": [Function],
+    "type": "Slider",
+    "valid": [Function],
+    "value": [Function],
+  },
+  "wrapper": <label
+    id="dialog-slider-wrapper"
+  >
+    <div
+      class="row"
+      style="justify-content: space-between;"
+    >
+      <span
+        id="dialog-slider-label"
+      >
+        Move right
+      </span>
+      <span
+        id="dialog-slider-value-label"
+      >
+        5cm
+      </span>
+    </div>
+    <input
+      id="dialog-slider"
+      max="10"
+      min="1"
+      type="range"
+    />
+  </label>,
+}
+`;

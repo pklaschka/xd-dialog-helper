@@ -312,7 +312,7 @@ declare module 'xd-dialog-helper' {
          * - `id: string`
          * - `label: string`
          * - `value: number` – Initial value of the slider
-         * - `htmlAttributes: object` – get applied to the `<input type="slider">` element
+         * - `htmlAttributes: object` – get applied to the `<input type="range">` element
          * - `htmlAttributes.min: number` – minimum slider value
          * - `htmlAttributes.max: number` – maximum slider value
          *
