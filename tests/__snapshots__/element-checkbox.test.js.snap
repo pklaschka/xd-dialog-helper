@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[` 1`] = `"Input"`;
+
+exports[`Checkbox Element render() should render correctly 1`] = `
+Object {
+  "input": <input
+    id="dialog-hr"
+    placeholder="Hello World"
+    type="checkbox"
+  />,
+  "props": Object {
+    "id": "hr",
+    "label": "Hello World",
+  },
+  "type": Object {
+    "render": [Function],
+    "type": "Input",
+    "valid": [Function],
+    "value": [Function],
+  },
+  "wrapper": <label
+    id="dialog-hr-wrapper"
+    style="flex-direction: row; align-items: center;"
+  >
+    <input
+      id="dialog-hr"
+      placeholder="Hello World"
+      type="checkbox"
+    />
+    <span
+      id="dialog-hr-label"
+    >
+      Hello World
+    </span>
+  </label>,
+}
+`;
