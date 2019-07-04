@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[` 1`] = `"Select"`;
+
+exports[`Select Element render() should render correctly 1`] = `
+Object {
+  "input": <select
+    id="dialog-select"
+    someattr="hello"
+  >
+    <option
+      value="a"
+    >
+      A
+    </option>
+    <option
+      value="b"
+    >
+      B
+    </option>
+  </select>,
+  "props": Object {
+    "htmlAttributes": Object {
+      "someAttr": "hello",
+    },
+    "id": "select",
+    "label": "Move right",
+    "options": Array [
+      Object {
+        "label": "A",
+        "value": "a",
+      },
+      Object {
+        "label": "B",
+        "value": "b",
+      },
+    ],
+    "value": "a",
+  },
+  "type": Object {
+    "render": [Function],
+    "type": "Select",
+    "valid": [Function],
+    "value": [Function],
+  },
+  "wrapper": <label
+    id="dialog-select-wrapper"
+  >
+    <span
+      id="dialog-select-label"
+    >
+      Move right
+    </span>
+    <select
+      id="dialog-select"
+      someattr="hello"
+    >
+      <option
+        value="a"
+      >
+        A
+      </option>
+      <option
+        value="b"
+      >
+        B
+      </option>
+    </select>
+  </label>,
+}
+`;
+
+exports[`Select Element render() should render correctly 2`] = `
+Object {
+  "input": <select
+    id="dialog-noHTML"
+  />,
+  "props": Object {
+    "id": "noHTML",
+    "options": Array [],
+  },
+  "type": Object {
+    "render": [Function],
+    "type": "Select",
+    "valid": [Function],
+    "value": [Function],
+  },
+  "wrapper": <label
+    id="dialog-noHTML-wrapper"
+  >
+    <span
+      id="dialog-noHTML-label"
+    >
+      undefined
+    </span>
+    <select
+      id="dialog-noHTML"
+    />
+  </label>,
+}
+`;

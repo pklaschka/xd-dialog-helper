@@ -4,6 +4,14 @@
  */
 const SELECT = {
     render: (dialogId, props, actions) => {
+        if (
+            props.options === undefined
+        ) {
+            // eslint-disable-next-line no-console
+            console.error('A select box must have an `options` parameter passed in the props.');
+            return null;
+        }
+
         const wrapper = document.createElement('label');
         wrapper.id = `${dialogId}-${props.id}` + '-wrapper';
         const selectLabel = document.createElement('span');
@@ -25,10 +33,6 @@ const SELECT = {
             for (let name in props.htmlAttributes) {
                 input.setAttribute(name, props.htmlAttributes[name]);
             }
-
-            // To select value in select:
-            if (props.htmlAttributes['value'])
-                input.value = props.htmlAttributes.value;
         }
 
         if (props.value !== undefined)

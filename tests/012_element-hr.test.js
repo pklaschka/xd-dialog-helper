@@ -1,9 +1,12 @@
 const hr = require('../src/main').types.HR;
 const actions = {
     change: jest.fn(() => undefined),
-    values: jest.fn(() => {}),
-    close: jest.fn(() => {}),
-    cancel: jest.fn(() => {}),
+    values: jest.fn(() => {
+    }),
+    close: jest.fn(() => {
+    }),
+    cancel: jest.fn(() => {
+    }),
     registerElement: jest.fn(() => undefined)
 };
 
@@ -19,7 +22,8 @@ describe('HR Element', () => {
         it('should render correctly', () => {
             expect(rendered).toMatchSnapshot();
 
-            expect(hr.render('dialog',{id: 'noHTML'}, actions)).toMatchSnapshot();        });
+            expect(hr.render('dialog', {id: 'noHTML'}, actions)).toMatchSnapshot();
+        });
     });
     describe('value()', () => {
         it('should correctly return undefined as value', () => {
