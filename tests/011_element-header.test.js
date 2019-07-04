@@ -1,9 +1,12 @@
 const header = require('../src/main').types.HEADER;
 const actions = {
     change: jest.fn(() => undefined),
-    values: jest.fn(() => {}),
-    close: jest.fn(() => {}),
-    cancel: jest.fn(() => {}),
+    values: jest.fn(() => {
+    }),
+    close: jest.fn(() => {
+    }),
+    cancel: jest.fn(() => {
+    }),
     registerElement: jest.fn(() => undefined)
 };
 
@@ -19,6 +22,8 @@ describe('Header Element', () => {
     describe('render()', () => {
         it('should render correctly', () => {
             expect(rendered).toMatchSnapshot();
+
+            expect(header.render('dialog', {id: 'noHTML'}, actions)).toMatchSnapshot();
         });
     });
     describe('value()', () => {

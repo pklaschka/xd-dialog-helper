@@ -25,6 +25,7 @@ const SELECT = {
             for (let name in props.htmlAttributes) {
                 input.setAttribute(name, props.htmlAttributes[name]);
             }
+
             // To select value in select:
             if (props.htmlAttributes['value'])
                 input.value = props.htmlAttributes.value;

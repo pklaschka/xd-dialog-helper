@@ -8,8 +8,7 @@ const HEADER = {
         header.innerHTML = props.label;
         if (props.htmlAttributes) {
             for (let name in props.htmlAttributes) {
-                if (props.htmlAttributes.hasOwnProperty(name))
-                    header.setAttribute(name, props.htmlAttributes[name]);
+                header.setAttribute(name, props.htmlAttributes[name]);
             }
         }
         header.id = `${dialogId}-${props.id}`;

@@ -20,6 +20,8 @@ describe('Text Input Element', () => {
     describe('render()', () => {
         it('should render correctly', () => {
             expect(rendered).toMatchSnapshot();
+
+            expect(textInput.render('dialog',{id: 'noHTML'}, actions)).toMatchSnapshot();
         });
     });
     describe('value()', () => {

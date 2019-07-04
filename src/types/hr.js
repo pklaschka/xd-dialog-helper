@@ -7,8 +7,7 @@ const HR = {
         const rule = document.createElement('hr');
         if (props.htmlAttributes) {
             for (let name in props.htmlAttributes) {
-                if (props.htmlAttributes.hasOwnProperty(name))
-                    rule.setAttribute(name, props.htmlAttributes[name]);
+                rule.setAttribute(name, props.htmlAttributes[name]);
             }
         }
         rule.id = `${dialogId}-${props.id}`;

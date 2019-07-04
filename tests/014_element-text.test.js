@@ -1,9 +1,12 @@
 const text = require('../src/main').types.TEXT;
 const actions = {
     change: jest.fn(() => undefined),
-    values: jest.fn(() => {}),
-    close: jest.fn(() => {}),
-    cancel: jest.fn(() => {}),
+    values: jest.fn(() => {
+    }),
+    close: jest.fn(() => {
+    }),
+    cancel: jest.fn(() => {
+    }),
     registerElement: jest.fn(() => undefined)
 };
 
@@ -19,6 +22,8 @@ describe('Text Element', () => {
     describe('render()', () => {
         it('should render correctly', () => {
             expect(rendered).toMatchSnapshot();
+
+            expect(text.render('dialog', {id: 'noHTML'}, actions)).toMatchSnapshot();
         });
     });
     describe('value()', () => {

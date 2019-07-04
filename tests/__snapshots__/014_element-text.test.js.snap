@@ -26,3 +26,23 @@ Object {
   </p>,
 }
 `;
+
+exports[`Text Element render() should render correctly 2`] = `
+Object {
+  "input": undefined,
+  "props": Object {
+    "id": "noHTML",
+  },
+  "type": Object {
+    "render": [Function],
+    "type": "Text",
+    "valid": [Function],
+    "value": [Function],
+  },
+  "wrapper": <p
+    id="dialog-noHTML"
+  >
+    undefined
+  </p>,
+}
+`;

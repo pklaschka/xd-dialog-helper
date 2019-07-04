@@ -20,6 +20,8 @@ describe('Text Area Element', () => {
     describe('render()', () => {
         it('should render correctly', () => {
             expect(rendered).toMatchSnapshot();
+
+            expect(textArea.render('dialog',{id: 'noHTML'}, actions)).toMatchSnapshot();
         });
     });
     describe('value()', () => {

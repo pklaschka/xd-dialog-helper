@@ -17,15 +17,16 @@ const TEXT_INPUT = {
 
         if (props.htmlAttributes) {
             for (let name in props.htmlAttributes) {
-                if (props.htmlAttributes.hasOwnProperty(name))
-                    input.setAttribute(name, props.htmlAttributes[name]);
+                input.setAttribute(name, props.htmlAttributes[name]);
             }
         }
 
         if (props.value !== undefined)
             input.value = props.value;
 
-        input.addEventListener('input', () => { actions.change(); });
+        input.addEventListener('input', () => {
+            actions.change();
+        });
 
         return {
             wrapper,

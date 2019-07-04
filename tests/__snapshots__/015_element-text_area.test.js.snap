@@ -40,3 +40,35 @@ Object {
   </label>,
 }
 `;
+
+exports[`Text Area Element render() should render correctly 2`] = `
+Object {
+  "input": <textarea
+    id="dialog-noHTML"
+    placeholder="undefined"
+  />,
+  "props": Object {
+    "id": "noHTML",
+  },
+  "type": Object {
+    "render": [Function],
+    "type": "Textarea",
+    "valid": [Function],
+    "value": [Function],
+  },
+  "wrapper": <label
+    id="dialog-noHTML-wrapper"
+  >
+    <span
+      id="dialog-noHTML-label"
+    >
+      undefined
+      <br />
+    </span>
+    <textarea
+      id="dialog-noHTML"
+      placeholder="undefined"
+    />
+  </label>,
+}
+`;

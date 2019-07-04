@@ -18,7 +18,8 @@ describe('HR Element', () => {
     describe('render()', () => {
         it('should render correctly', () => {
             expect(rendered).toMatchSnapshot();
-        });
+
+            expect(hr.render('dialog',{id: 'noHTML'}, actions)).toMatchSnapshot();        });
     });
     describe('value()', () => {
         it('should correctly return undefined as value', () => {

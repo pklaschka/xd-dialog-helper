@@ -41,3 +41,37 @@ Object {
   </label>,
 }
 `;
+
+exports[`Checkbox Element render() should render correctly 2`] = `
+Object {
+  "input": <input
+    id="dialog-noHTML"
+    placeholder="undefined"
+    type="checkbox"
+  />,
+  "props": Object {
+    "id": "noHTML",
+  },
+  "type": Object {
+    "render": [Function],
+    "type": "Input",
+    "valid": [Function],
+    "value": [Function],
+  },
+  "wrapper": <label
+    id="dialog-noHTML-wrapper"
+    style="flex-direction: row; align-items: center;"
+  >
+    <input
+      id="dialog-noHTML"
+      placeholder="undefined"
+      type="checkbox"
+    />
+    <span
+      id="dialog-noHTML-label"
+    >
+      undefined
+    </span>
+  </label>,
+}
+`;

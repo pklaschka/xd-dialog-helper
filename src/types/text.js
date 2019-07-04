@@ -8,8 +8,7 @@ const TEXT = {
         paragraph.innerHTML = props.label;
         if (props.htmlAttributes) {
             for (let name in props.htmlAttributes) {
-                if (props.htmlAttributes.hasOwnProperty(name))
-                    paragraph.setAttribute(name, props.htmlAttributes[name]);
+                paragraph.setAttribute(name, props.htmlAttributes[name]);
             }
         }
         paragraph.id = `${dialogId}-${props.id}`;

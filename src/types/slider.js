@@ -48,8 +48,7 @@ const SLIDER = {
 
         if (props.htmlAttributes) {
             for (let name in props.htmlAttributes) {
-                if (props.htmlAttributes.hasOwnProperty(name))
-                    input.setAttribute(name, props.htmlAttributes[name]);
+                input.setAttribute(name, props.htmlAttributes[name]);
             }
         }
 

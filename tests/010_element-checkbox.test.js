@@ -1,9 +1,12 @@
 const checkbox = require('../src/main').types.CHECKBOX;
 const actions = {
     change: jest.fn(() => undefined),
-    values: jest.fn(() => {}),
-    close: jest.fn(() => {}),
-    cancel: jest.fn(() => {}),
+    values: jest.fn(() => {
+    }),
+    close: jest.fn(() => {
+    }),
+    cancel: jest.fn(() => {
+    }),
     registerElement: jest.fn(() => undefined)
 };
 
@@ -19,6 +22,8 @@ describe('Checkbox Element', () => {
     describe('render()', () => {
         it('should render correctly', () => {
             expect(rendered).toMatchSnapshot();
+
+            expect(checkbox.render('dialog', {id: 'noHTML'}, actions)).toMatchSnapshot();
         });
     });
     describe('value()', () => {
@@ -37,7 +42,7 @@ describe('Checkbox Element', () => {
         });
 
         it('should return false for checked checkboxes if required == true', () => {
-            let emptyField = checkbox.render('dialog',  {
+            let emptyField = checkbox.render('dialog', {
                 id: 'helloworld',
                 label: 'My world',
                 value: false,
@@ -47,7 +52,7 @@ describe('Checkbox Element', () => {
         });
 
         it('should return true for checked checkboxes if required == true', () => {
-            let emptyField = checkbox.render('dialog',  {
+            let emptyField = checkbox.render('dialog', {
                 id: 'helloworld',
                 label: 'My world',
                 value: true,
