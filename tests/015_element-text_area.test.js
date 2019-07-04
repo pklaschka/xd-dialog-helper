@@ -1,27 +1,42 @@
 const textArea = require('../src/main').types.TEXT_AREA;
 const actions = {
     change: jest.fn(() => undefined),
-    values: jest.fn(() => {}),
-    close: jest.fn(() => {}),
-    cancel: jest.fn(() => {}),
+    values: jest.fn(() => {
+    }),
+    close: jest.fn(() => {
+    }),
+    cancel: jest.fn(() => {
+    }),
     registerElement: jest.fn(() => undefined)
 };
 
-const rendered = textArea.render('dialog', {
-    id: 'hr',
-    label: 'Hello World',
-    value: 'abc',
-    htmlAttributes: {
-        someAttr: 'hello'
-    }
-}, actions);
+let rendered;
 
 describe('Text Area Element', () => {
+    beforeEach(() => {
+        rendered = textArea.render('dialog', {
+            id: 'hr',
+            label: 'Hello World',
+            value: 'abc',
+            htmlAttributes: {
+                someAttr: 'hello'
+            }
+        }, actions);
+    });
+
     describe('render()', () => {
         it('should render correctly', () => {
             expect(rendered).toMatchSnapshot();
 
-            expect(textArea.render('dialog',{id: 'noHTML'}, actions)).toMatchSnapshot();
+            expect(textArea.render('dialog', {id: 'noHTML'}, actions)).toMatchSnapshot();
+        });
+
+        it('should correctly handle changing values', () => {
+            rendered.input.value = '6';
+            rendered.input.dispatchEvent(new Event('input'));
+
+            expect(actions.change).toBeCalled();
+            expect(textArea.value(rendered)).toBe('6');
         });
     });
     describe('value()', () => {
@@ -35,7 +50,7 @@ describe('Text Area Element', () => {
         });
 
         it('should return false for empty fields if required == true', () => {
-            let emptyField = textArea.render('dialog',  {
+            let emptyField = textArea.render('dialog', {
                 id: 'helloworld',
                 label: 'My world',
                 value: '',
@@ -45,7 +60,7 @@ describe('Text Area Element', () => {
         });
 
         it('should return true for non-empty fields if required == true', () => {
-            let emptyField = textArea.render('dialog',  {
+            let emptyField = textArea.render('dialog', {
                 id: 'helloworld',
                 label: 'My world',
                 value: 'a',

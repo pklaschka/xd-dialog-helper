@@ -7,21 +7,33 @@ const actions = {
     registerElement: jest.fn(() => undefined)
 };
 
-const rendered = textInput.render('dialog', {
-    id: 'hr',
-    label: 'Hello World',
-    value: 'abc',
-    htmlAttributes: {
-        someAttr: 'hello'
-    }
-}, actions);
+let rendered;
 
 describe('Text Input Element', () => {
+    beforeEach(() => {
+        rendered = textInput.render('dialog', {
+            id: 'hr',
+            label: 'Hello World',
+            value: 'abc',
+            htmlAttributes: {
+                someAttr: 'hello'
+            }
+        }, actions);
+    });
+
     describe('render()', () => {
         it('should render correctly', () => {
             expect(rendered).toMatchSnapshot();
 
             expect(textInput.render('dialog',{id: 'noHTML'}, actions)).toMatchSnapshot();
+        });
+
+        it('should correctly handle changing values', () => {
+            rendered.input.value = '6';
+            rendered.input.dispatchEvent(new Event('input'));
+
+            expect(actions.change).toBeCalled();
+            expect(textInput.value(rendered)).toBe('6');
         });
     });
     describe('value()', () => {
