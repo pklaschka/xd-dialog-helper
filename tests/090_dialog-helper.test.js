@@ -31,6 +31,17 @@ describe('Dialog-Helper', () => {
             document.getElementById('a-dialogHelperBtnOk').click();
         });
 
+        it('should reject correctly when it gets cancelled', async done => {
+            DialogHelper.showDialog('a', 'abc', [
+                {type: DialogHelper.CHECKBOX, id: 'cb', label: 'Checkbox', value: true}
+            ], {}).then(() => {
+            }, reason => {
+                expect(reason).toBe('reasonCanceled');
+                done();
+            });
+            document.getElementById('a-dialogHelperBtnCancel').click();
+        });
+
         it('should have the correct element and value', async done => {
             DialogHelper.showDialog('a', 'abc', [
                 {type: DialogHelper.CHECKBOX, id: 'cb', label: 'Checkbox', value: true}
