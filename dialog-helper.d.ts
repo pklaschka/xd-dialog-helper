@@ -1,3 +1,8 @@
+/**
+ * The `xd-dialog-helper` module
+ *
+ * @author Pablo Klaschka <xdplugins@pabloklaschka.de>
+ */
 declare module 'xd-dialog-helper' {
     /**
      * A list of actions that can get performed for the dialog
@@ -58,24 +63,75 @@ declare module 'xd-dialog-helper' {
     export interface ContentElementDeclaration {
         /**
          * The unique id of the element. Will also get used for HTML element ids
+         *
+         * **Required for all types**
          */
         id: string;
+
         /**
          * The type of the content element
+         *
+         * **Required for all types**
          */
         type: ContentElementType;
+
         /**
          * The label of the element (may that be the text in case of a `types.TEXT` or the slider label in case of a `types.SLIDER`
+         *
+         * **Required for all types**
          */
-        label?: string;
+        label: string;
+
         /**
          * Initial value, if applicable
+         *
+         * **Required for:** n/a
+         * **Optional for:** `CHECKBOX`, `SELECT`, `SLIDER`, `TEXT_AREA`, `TEXT_INPUT`
          */
         value?: any;
+
         /**
          * HTML attributes in a key-value-pair object form that get applied to an element – dependent on the `type`. See documentation for the `type` for more information about how the attributes get applied for the specific type
+         *
+         * **Required for:** `SLIDER`
+         * **Optional for:** `CHECKBOX`, `HEADER`, `HR`, `SELECT`, `TEXT`, `TEXT_AREA`, `TEXT_INPUT`
          */
-        htmlAttributes: object;
+        htmlAttributes: {
+            /**
+             * The minimum numeric value
+             *
+             * **Required for:** `SLIDER`
+             * **Optional for:** n/a
+             */
+            min?: number;
+            /**
+             * The maximum numeric value
+             *
+             * **Required for:** `SLIDER`
+             * **Optional for:** n/a
+             */
+            max?: number;
+
+            [property: string]: string | number | boolean | undefined;
+        };
+
+        /**
+         * The unit of the input.
+         *
+         * **Required for:** n/a
+         * **Optional for:** `SLIDER`
+         */
+        unit?: string;
+
+        /**
+         * Whether an input is required (or a checkbox must be checked) in this field
+         *
+         * **Required for:** n/a
+         * **Optional for:** `CHECKBOX`, `TEXT_AREA`, `TEXT_INPUT`
+         */
+        required?: boolean;
+
+        [property: string]: any;
     }
 
     /**
@@ -214,7 +270,7 @@ declare module 'xd-dialog-helper' {
          * - `htmlAttributes: object` – get applied to the `<input type="checkbox">` element
          * - `required: boolean` – determines if checkbox must be checked for the element to be valid (default: `false`)
          */
-        CHECKBOX: ContentElementType;
+        readonly CHECKBOX: ContentElementType;
         /**
          * A headline element
          *
@@ -225,7 +281,7 @@ declare module 'xd-dialog-helper' {
          * ### Supported props
          * - `htmlAttributes: object` – get applied to the `<h2>` element
          */
-        HEADER: ContentElementType;
+        readonly HEADER: ContentElementType;
         /**
          * A horizontal rule (`<hr>`) element
          *
@@ -235,27 +291,72 @@ declare module 'xd-dialog-helper' {
          * ### Supported props
          * - `htmlAttributes: object` – get applied to the `<hr>` element
          */
-        HR: ContentElementType;
+        readonly HR: ContentElementType;
         /**
          * A selection/dropdown element
+         *
+         * ### Required props
+         * - `id: string`
+         * - `label: string`
+         * - `options: Array<{value: string, label: string}>`
+         *
+         * ### Supported props
+         * - `value: string` – Initial value (value of the initially selected option in `options`)
+         * - `htmlAttributes: object` – get applied to the `<select>` element
          */
-        SELECT: ContentElementType;
+        readonly SELECT: ContentElementType;
         /**
          * A numeric value slider element
+         *
+         * ### Required props
+         * - `id: string`
+         * - `label: string`
+         * - `value: number` – Initial value of the slider
+         * - `htmlAttributes: object` – get applied to the `<input type="slider">` element
+         * - `htmlAttributes.min: number` – minimum slider value
+         * - `htmlAttributes.max: number` – maximum slider value
+         *
+         * ### Supported props
+         * - `unit: string` – Unit of the slider – gets displayed on the right-hand side above the slider
          */
-        SLIDER: ContentElementType;
+        readonly SLIDER: ContentElementType;
         /**
          * A (static) text element
+         *
+         * ### Required props
+         * - `id: string`
+         * - `label: string`
+         *
+         * ### Supported props
+         * - `htmlAttributes: object` – get applied to the `<p>` element
          */
-        TEXT: ContentElementType;
+        readonly TEXT: ContentElementType;
         /**
          * A text area input element
+         *
+         * ### Required props
+         * - `id: string`
+         * - `label: string`
+         *
+         * ### Supported props
+         * - `value: string` – Initial value (default: `''`)
+         * - `htmlAttributes: object` – get applied to the `<textarea>` element
+         * - `required: boolean` – determines if text is required (i.e., the field must not be empty) for the element to be valid (default: `false`)
          */
-        TEXT_AREA: ContentElementType;
+        readonly TEXT_AREA: ContentElementType;
         /**
          * A (single-line) text input element
+         *
+         * ### Required props
+         * - `id: string`
+         * - `label: string`
+         *
+         * ### Supported props
+         * - `value: string` – Initial value (default: `''`)
+         * - `htmlAttributes: object` – get applied to the `<input type="text">` element
+         * - `required: boolean` – determines if text is required (i.e., the field must not be empty) for the element to be valid (default: `false`)
          */
-        TEXT_INPUT: ContentElementType;
+        readonly TEXT_INPUT: ContentElementType;
     }
 
     export const types: types;
