@@ -32,14 +32,12 @@ describe('Dialog-Helper', () => {
         });
 
         it('should reject correctly when it gets cancelled', async done => {
-            DialogHelper.showDialog('a', 'abc', [
+            expect(DialogHelper.showDialog('a', 'abc', [
                 {type: DialogHelper.CHECKBOX, id: 'cb', label: 'Checkbox', value: true}
-            ], {}).then(() => {
-            }, reason => {
-                expect(reason).toBe('reasonCanceled');
-                done();
-            });
+            ], {})).rejects.toThrow('reasonCanceled');
+
             document.getElementById('a-dialogHelperBtnCancel').click();
+            done();
         });
 
         it('should have the correct element and value', async done => {

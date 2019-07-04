@@ -53,7 +53,7 @@ async function showDialog(id, title, contents = [], options = {}) {
                 dialog.close(JSON.stringify(actionList.values()));
         },
         cancel: () => {
-            dialog.close('reasonCanceled');
+            dialog.close(0);
         },
         values: () => {
             let returnValues = {};
@@ -114,8 +114,8 @@ async function showDialog(id, title, contents = [], options = {}) {
 
     const results = await dialog.showModal();
     // ... and handle results:
-    if (results === 'reasonCanceled') {
-        throw new Error(results); // User canceled the dialog
+    if (results === 0) {
+        throw new Error('reasonCanceled'); // User canceled the dialog
     } else {
         return JSON.parse(results); // User submitted dialog
     }

@@ -85,4 +85,27 @@ describe('Dialog validation', () => {
             document.getElementById('dialog-dialogHelperBtnOk').click();
         });
     });
+
+    describe('actions.close()', () => {
+        it('shouldn\'t work when the dialog is invalid', (done) => {
+            document.body.innerHTML = '';
+            let closer;
+
+            let dialogPromise = dialogHelper.showDialog('dialog', 'My dialog', [
+                {
+                    id: 'cb',
+                    type: dialogHelper.types.CHECKBOX,
+                    value: false,
+                    required: true,
+                    label: 'Checkbox'
+                }
+            ], {onBeforeShow: (htmlDialogElement, contentElements, actionList) => { closer = actionList.close; }});
+
+            setTimeout(() => {
+                closer();
+                expect(dialogPromise.resolves).not.toBeTruthy();
+                done();
+            }, 100);
+        });
+    });
 });
