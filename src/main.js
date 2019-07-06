@@ -14,11 +14,11 @@ async function showDialog(id, title, contents = [], options = {}) {
     dialog.id = `${id}-dialog`;
     dialog.innerHTML = `
 <style>
-    dialog#${id} {
-            width: ${options.width || 360}px;
+    form {
+        width: ${options.width || 360}px;
     }
         
-    ${options.css}
+    ${options.css || ''}
 </style>
 <form method="dialog">
 <header><h1>${title}</h1><hr></header>
