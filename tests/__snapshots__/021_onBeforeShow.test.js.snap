@@ -11,11 +11,11 @@ exports[`options.onBeforeShow should get passed the correct parameters 1`] = `
 
         <style>
           
-    dialog#dialog {
-            width: 360px;
+    form {
+        width: 360px;
     }
         
-    undefined
+    
 
         </style>
         
