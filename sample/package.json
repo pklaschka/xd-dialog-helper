@@ -14,6 +14,7 @@
   },
   "scripts": {
     "build": "webpack --config webpack.config.js --mode development",
-    "watch": "xdpm watch"
+    "watch": "xdpm watch",
+    "start": "npm install && npm run build && xdpm i -o"
   }
 }

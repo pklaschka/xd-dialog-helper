@@ -30,7 +30,6 @@ Object {
       id="dialog-hr-label"
     >
       Hello World
-      <br />
     </span>
     <textarea
       id="dialog-hr"
@@ -63,7 +62,6 @@ Object {
       id="dialog-noHTML-label"
     >
       undefined
-      <br />
     </span>
     <textarea
       id="dialog-noHTML"

@@ -11,7 +11,7 @@ const TEXT_INPUT = {
         input.placeholder = props.label;
         const inputLabel = document.createElement('span');
         inputLabel.id = `${dialogId}-${props.id}` + '-label';
-        inputLabel.innerHTML = props.label + '<br>';
+        inputLabel.innerHTML = props.label + '';
         wrapper.appendChild(inputLabel);
         wrapper.appendChild(input);
 

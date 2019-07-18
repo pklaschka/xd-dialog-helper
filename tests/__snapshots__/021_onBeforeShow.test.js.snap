@@ -14,7 +14,25 @@ exports[`options.onBeforeShow should get passed the correct parameters 1`] = `
     form {
         width: 360px;
     }
-        
+
+    div, main &gt; *, label, input:not([type="checkbox"]), select, textarea {
+        display: block;
+        width: 100%;
+    }
+		
+    main &gt; * + * {
+        margin-top: 1em;
+    }
+		
+    .checkbox-wrapper {
+        display: flex;
+    }
+		
+    .checkbox-wrapper span, .checkbox-wrapper input{
+        display: block;
+        width: auto;
+    }
+		
     
 
         </style>
@@ -25,16 +43,15 @@ exports[`options.onBeforeShow should get passed the correct parameters 1`] = `
         >
           
 
-          <header>
-            <h1>
-              My dialog
-            </h1>
-            <hr />
-          </header>
+          <h1>
+            My dialog
+          </h1>
+          <hr />
           
 
           <main>
             <label
+              class="checkbox-wrapper"
               id="dialog-cb-wrapper"
               style="flex-direction: row; align-items: center;"
             >
@@ -107,6 +124,7 @@ exports[`options.onBeforeShow should get passed the correct parameters 1`] = `
             "value": [Function],
           },
           "wrapper": <label
+            class="checkbox-wrapper"
             id="dialog-cb-wrapper"
             style="flex-direction: row; align-items: center;"
           >

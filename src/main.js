@@ -17,11 +17,29 @@ async function showDialog(id, title, contents = [], options = {}) {
     form {
         width: ${options.width || 360}px;
     }
-        
+
+    div, main > *, label, input:not([type="checkbox"]), select, textarea {
+        display: block;
+        width: 100%;
+    }
+		
+    main > * + * {
+        margin-top: 1em;
+    }
+		
+    .checkbox-wrapper {
+        display: flex;
+    }
+		
+    .checkbox-wrapper span, .checkbox-wrapper input{
+        display: block;
+        width: auto;
+    }
+		
     ${options.css || ''}
 </style>
 <form method="dialog">
-<header><h1>${title}</h1><hr></header>
+<h1>${title}</h1><hr>
 <main></main>
 <footer>
 <button id="${id}-dialogHelperBtnCancel" uxp-variant="primary">${options.cancelButtonText || 'Cancel'}</button>
