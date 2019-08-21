@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[` 1`] = `"Input"`;
+
+exports[`Checkbox Element render() should render correctly 1`] = `
+Object {
+  "input": <input
+    id="dialog-hr"
+    placeholder="Hello World"
+    someattr="hello"
+    type="checkbox"
+  />,
+  "props": Object {
+    "htmlAttributes": Object {
+      "someAttr": "hello",
+    },
+    "id": "hr",
+    "label": "Hello World",
+  },
+  "type": Object {
+    "render": [Function],
+    "type": "Input",
+    "valid": [Function],
+    "value": [Function],
+  },
+  "wrapper": <label
+    id="dialog-hr-wrapper"
+    style="flex-direction: row; align-items: center;"
+  >
+    <input
+      id="dialog-hr"
+      placeholder="Hello World"
+      someattr="hello"
+      type="checkbox"
+    />
+    <span
+      id="dialog-hr-label"
+    >
+      Hello World
+    </span>
+  </label>,
+}
+`;
+
+exports[`Checkbox Element render() should render correctly 2`] = `
+Object {
+  "input": <input
+    id="dialog-noHTML"
+    placeholder="undefined"
+    type="checkbox"
+  />,
+  "props": Object {
+    "id": "noHTML",
+  },
+  "type": Object {
+    "render": [Function],
+    "type": "Input",
+    "valid": [Function],
+    "value": [Function],
+  },
+  "wrapper": <label
+    id="dialog-noHTML-wrapper"
+    style="flex-direction: row; align-items: center;"
+  >
+    <input
+      id="dialog-noHTML"
+      placeholder="undefined"
+      type="checkbox"
+    />
+    <span
+      id="dialog-noHTML-label"
+    >
+      undefined
+    </span>
+  </label>,
+}
+`;

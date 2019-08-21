@@ -1,0 +1,143 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`options.onBeforeShow should get passed the correct parameters 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      <dialog
+        id="dialog-dialog"
+      >
+        
+
+        <style>
+          
+    form {
+        width: 360px;
+    }
+        
+    
+
+        </style>
+        
+
+        <form
+          method="dialog"
+        >
+          
+
+          <header>
+            <h1>
+              My dialog
+            </h1>
+            <hr />
+          </header>
+          
+
+          <main>
+            <label
+              id="dialog-cb-wrapper"
+              style="flex-direction: row; align-items: center;"
+            >
+              <input
+                id="dialog-cb"
+                placeholder="Checkbox"
+                type="checkbox"
+                value="false"
+              />
+              <span
+                id="dialog-cb-label"
+              >
+                Checkbox
+              </span>
+            </label>
+          </main>
+          
+
+          <footer>
+            
+
+            <button
+              id="dialog-dialogHelperBtnCancel"
+              uxp-variant="primary"
+            >
+              Cancel
+            </button>
+            
+
+            <button
+              id="dialog-dialogHelperBtnOk"
+              type="submit"
+              uxp-variant="cta"
+            >
+              Ok
+            </button>
+            
+
+          </footer>
+          
+
+        </form>
+        
+    
+      </dialog>,
+      Array [
+        Object {
+          "input": <input
+            id="dialog-cb"
+            placeholder="Checkbox"
+            type="checkbox"
+            value="false"
+          />,
+          "props": Object {
+            "id": "cb",
+            "label": "Checkbox",
+            "required": true,
+            "type": Object {
+              "render": [Function],
+              "type": "Input",
+              "valid": [Function],
+              "value": [Function],
+            },
+            "value": false,
+          },
+          "type": Object {
+            "render": [Function],
+            "type": "Input",
+            "valid": [Function],
+            "value": [Function],
+          },
+          "wrapper": <label
+            id="dialog-cb-wrapper"
+            style="flex-direction: row; align-items: center;"
+          >
+            <input
+              id="dialog-cb"
+              placeholder="Checkbox"
+              type="checkbox"
+              value="false"
+            />
+            <span
+              id="dialog-cb-label"
+            >
+              Checkbox
+            </span>
+          </label>,
+        },
+      ],
+      Object {
+        "cancel": [Function],
+        "change": [Function],
+        "close": [Function],
+        "registerContentElement": [Function],
+        "values": [Function],
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": true,
+    },
+  ],
+}
+`;

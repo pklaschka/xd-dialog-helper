@@ -5,3 +5,7 @@ tests
 coverage
 .travis.yml
 .github
+src
+tsconfig.json
+webpack.config.js
+.eslintrc.js

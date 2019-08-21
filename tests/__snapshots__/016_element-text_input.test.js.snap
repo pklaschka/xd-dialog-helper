@@ -1,0 +1,74 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[` 1`] = `"Input"`;
+
+exports[`Text Input Element render() should render correctly 1`] = `
+Object {
+  "input": <input
+    id="dialog-hr"
+    placeholder="Hello World"
+    someattr="hello"
+  />,
+  "props": Object {
+    "htmlAttributes": Object {
+      "someAttr": "hello",
+    },
+    "id": "hr",
+    "label": "Hello World",
+    "value": "abc",
+  },
+  "type": Object {
+    "render": [Function],
+    "type": "Input",
+    "valid": [Function],
+    "value": [Function],
+  },
+  "wrapper": <label
+    id="dialog-hr-wrapper"
+  >
+    <span
+      id="dialog-hr-label"
+    >
+      Hello World
+      <br />
+    </span>
+    <input
+      id="dialog-hr"
+      placeholder="Hello World"
+      someattr="hello"
+    />
+  </label>,
+}
+`;
+
+exports[`Text Input Element render() should render correctly 2`] = `
+Object {
+  "input": <input
+    id="dialog-noHTML"
+    placeholder="undefined"
+  />,
+  "props": Object {
+    "id": "noHTML",
+  },
+  "type": Object {
+    "render": [Function],
+    "type": "Input",
+    "valid": [Function],
+    "value": [Function],
+  },
+  "wrapper": <label
+    id="dialog-noHTML-wrapper"
+  >
+    <span
+      id="dialog-noHTML-label"
+    >
+      undefined
+      <br />
+    </span>
+    <input
+      id="dialog-noHTML"
+      placeholder="undefined"
+    />
+  </label>,
+}
+`;

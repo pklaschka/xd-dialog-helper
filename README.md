@@ -36,3 +36,33 @@ const dialogHelper = require('./lib/dialog-helper');
 
 #### Documentation for the library
 You can find a detailed guide on how to use the library in the [repository wiki](https://github.com/pklaschka/xd-dialog-helper/wiki).
+
+### Migrating to v1.0.0
+Mostly, there should be no breaking changes (but many additional options and improvements) in v1.0, since it mostly consists of an internal restructuring.
+
+However, with the release of the new version, the types have moved to a
+`types` namespace inside the `xd-dialog-helper` module.
+
+This  means that instead of writing
+
+```js
+dialogHelper.showDialog('dialog', 'My dialog', [{
+    id: 123,
+    type: dialogHelper.TEXT_INPUT,
+    label: 'Good morning'
+}]);
+```
+
+we have to write:
+
+```js
+dialogHelper.showDialog('dialog', 'My dialog', [{
+    id: 123,
+    type: dialogHelper.types.TEXT_INPUT,
+    label: 'Good morning'
+}]);
+```
+
+> **Please note:** The old way is still available (but marked as deprecated) in the alpha- and beta versions of v1.0. It will, however, get removed with the full release of the new version.
+
+Also, the type constant previously were aliases for numeric constants representing the type. This is no longer the case (to support custom types), which is why numeric values are no longer possible for the `type` field.
