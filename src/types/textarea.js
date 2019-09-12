@@ -11,7 +11,7 @@ const TEXTAREA = {
         input.placeholder = props.label;
         const textareaLabel = document.createElement('span');
         textareaLabel.id = `${dialogId}-${props.id}` + '-label';
-        textareaLabel.innerHTML = props.label + '<br>';
+        textareaLabel.innerHTML = props.label + '';
         wrapper.appendChild(textareaLabel);
         wrapper.appendChild(input);
 

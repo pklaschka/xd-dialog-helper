@@ -6,6 +6,7 @@ const CHECKBOX = {
     render: (dialogId, props, actions) => {
         const wrapper = document.createElement('label');
         wrapper.id = `${dialogId}-${props.id}` + '-wrapper';
+        wrapper.className = 'checkbox-wrapper';
         Object.assign(wrapper.style, {flexDirection: 'row', alignItems: 'center'});
 
         const input = document.createElement('input');
