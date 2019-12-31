@@ -214,7 +214,7 @@ declare module 'xd-dialog-helper' {
              */
             onValidate?: (values: object) => boolean;
         }
-    ): Promise<object>;
+    ): Promise<any>;
 
     /**
      * @deprecated Using the types from the `dialog-helper` class directly is deprecated and will get removed in v1.0.
