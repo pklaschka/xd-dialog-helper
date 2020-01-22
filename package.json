@@ -41,7 +41,7 @@
   "homepage": "https://github.com/pklaschka/xd-dialog-helper#readme",
   "devDependencies": {
     "eslint": "^6.0.1",
-    "jest": "^24.8.0",
+    "jest": "^25.1.0",
     "webpack": "^4.35.2",
     "webpack-cli": "^3.3.5"
   }
