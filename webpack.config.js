@@ -5,7 +5,6 @@ module.exports = {
         filename: 'dialog-helper.js',
         libraryTarget: 'commonjs2'
     },
-    devtool: 'none',
     externals: {
         uxp: 'uxp',
         application: 'application'
