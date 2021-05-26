@@ -21,7 +21,7 @@ describe('Dialog-Helper', () => {
     });
 
     describe('simple dialog with one checkbox (\'#cb\')', () => {
-        it('should resolve correctly', async done => {
+        it('should resolve correctly', done => {
             DialogHelper.showDialog('a', 'abc', [
                 {type: DialogHelper.CHECKBOX, id: 'cb', label: 'Checkbox', value: true}
             ], {}).then(value => {
@@ -31,7 +31,7 @@ describe('Dialog-Helper', () => {
             document.getElementById('a-dialogHelperBtnOk').click();
         });
 
-        it('should reject correctly when it gets cancelled', async done => {
+        it('should reject correctly when it gets cancelled', done => {
             expect(DialogHelper.showDialog('a', 'abc', [
                 {type: DialogHelper.CHECKBOX, id: 'cb', label: 'Checkbox', value: true}
             ], {})).rejects.toThrow('reasonCanceled');
@@ -40,7 +40,7 @@ describe('Dialog-Helper', () => {
             done();
         });
 
-        it('should have the correct element and value', async done => {
+        it('should have the correct element and value', done => {
             DialogHelper.showDialog('a', 'abc', [
                 {type: DialogHelper.CHECKBOX, id: 'cb', label: 'Checkbox', value: true}
             ], {}).then(value => {
@@ -51,7 +51,7 @@ describe('Dialog-Helper', () => {
             document.getElementById('a-dialogHelperBtnOk').click();
         });
 
-        it('should be able to process changed values', async done => {
+        it('should be able to process changed values', done => {
             DialogHelper.showDialog('a', 'abc', [
                 {type: DialogHelper.CHECKBOX, id: 'cb', label: 'Checkbox', value: true}
             ], {}).then(value => {
@@ -66,7 +66,7 @@ describe('Dialog-Helper', () => {
     });
 
     describe('simple dialog with one textfield (\'#txt\')', () => {
-        it('should resolve correctly', async done => {
+        it('should resolve correctly', done => {
             DialogHelper.showDialog('b', 'abc', [
                 {type: DialogHelper.TEXT_INPUT, id: 'txt', label: 'Text', value: 'Hello World'}
             ], {}).then(value => {
@@ -76,7 +76,7 @@ describe('Dialog-Helper', () => {
             document.getElementById('b-dialogHelperBtnOk').click();
         });
 
-        it('should have the correct element and value', async done => {
+        it('should have the correct element and value', done => {
             DialogHelper.showDialog('b', 'abc', [
                 {type: DialogHelper.TEXT_INPUT, id: 'txt', label: 'Text', value: 'Hello World'}
             ], {}).then(value => {
@@ -87,7 +87,7 @@ describe('Dialog-Helper', () => {
             document.getElementById('b-dialogHelperBtnOk').click();
         });
 
-        it('should be able to process changed values', async done => {
+        it('should be able to process changed values', done => {
             DialogHelper.showDialog('b', 'abc', [
                 {type: DialogHelper.TEXT_INPUT, id: 'txt', label: 'Text', value: 'Hello World'}
             ], {}).then(value => {
@@ -102,7 +102,7 @@ describe('Dialog-Helper', () => {
     });
 
     describe('simple dialog with one select box (\'#select\')', () => {
-        it('should resolve correctly', async done => {
+        it('should resolve correctly', done => {
             DialogHelper.showDialog('b', 'abc', [
                 {
                     type: DialogHelper.SELECT,
@@ -120,7 +120,7 @@ describe('Dialog-Helper', () => {
             });
             document.getElementById('b-dialogHelperBtnOk').click();
         });
-        it('should resolve correctly with a value of 0', async done => {
+        it('should resolve correctly with a value of 0', done => {
             DialogHelper.showDialog('b', 'abc', [
                 {
                     type: DialogHelper.SELECT,
@@ -138,7 +138,7 @@ describe('Dialog-Helper', () => {
             });
             document.getElementById('b-dialogHelperBtnOk').click();
         });
-        it('should initially select the correct element', async done => {
+        it('should initially select the correct element', done => {
             DialogHelper.showDialog('b', 'abc', [
                 {
                     type: DialogHelper.SELECT,
@@ -157,7 +157,7 @@ describe('Dialog-Helper', () => {
             expect(document.getElementById('b-select').value).toBe('opt1');
             document.getElementById('b-dialogHelperBtnOk').click();
         });
-        it('should contain the correct amount of options', async done => {
+        it('should contain the correct amount of options', done => {
             DialogHelper.showDialog('b', 'abc', [
                 {
                     type: DialogHelper.SELECT,
@@ -178,7 +178,7 @@ describe('Dialog-Helper', () => {
     });
 
     describe('slider', function () {
-        it('should behave correctly if the slider has a value of 0', async function (done) {
+        it('should behave correctly if the slider has a value of 0', function (done) {
             DialogHelper.showDialog('slider', 'abc', [
                 {
                     type: DialogHelper.SLIDER,
@@ -196,7 +196,7 @@ describe('Dialog-Helper', () => {
             });
             document.getElementById('slider-dialogHelperBtnOk').click();
         });
-        it('should behave correctly if the slider has a positive value', async function (done) {
+        it('should behave correctly if the slider has a positive value', function (done) {
             DialogHelper.showDialog('slider', 'abc', [
                 {
                     type: DialogHelper.SLIDER,
@@ -217,7 +217,7 @@ describe('Dialog-Helper', () => {
     });
 
     describe('multiple dialogs', function () {
-        it('should correctly load the same dialog twice', async function (done) {
+        it('should correctly load the same dialog twice', function (done) {
             DialogHelper.showDialog('b', 'abc', [
                 {
                     type: DialogHelper.SELECT,
@@ -252,7 +252,7 @@ describe('Dialog-Helper', () => {
             document.getElementById('b-dialogHelperBtnOk').click();
         });
 
-        it('should correctly load the same dialog with different contents twice', async function (done) {
+        it('should correctly load the same dialog with different contents twice', function (done) {
             DialogHelper.showDialog('b', 'abc', [
                 {
                     type: DialogHelper.SELECT,
@@ -288,7 +288,7 @@ describe('Dialog-Helper', () => {
             document.getElementById('b-dialogHelperBtnOk').click();
         });
 
-        it('should correctly load two different dialogs after each other', async function (done) {
+        it('should correctly load two different dialogs after each other', function (done) {
             DialogHelper.showDialog('b', 'abc', [
                 {
                     type: DialogHelper.SELECT,
@@ -324,14 +324,14 @@ describe('Dialog-Helper', () => {
             document.getElementById('b-dialogHelperBtnOk').click();
         });
 
-        it('should correctly load without optional parameters', async function (done) {
+        it('should correctly load without optional parameters', function (done) {
             DialogHelper.showDialog('b', 'abc').then(() => {
                 done();
             });
             document.getElementById('b-dialogHelperBtnOk').click();
         });
 
-        it('should correctly handle validation', async function (done) {
+        it('should correctly handle validation', function (done) {
             DialogHelper.showDialog('b', 'abc', [
                 {type: DialogHelper.CHECKBOX, value: false, id: 'cb', label: 'My checkbox'}
             ], {
