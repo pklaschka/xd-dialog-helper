@@ -96,7 +96,7 @@ declare module 'xd-dialog-helper' {
          * **Required for:** `SLIDER`
          * **Optional for:** `CHECKBOX`, `HEADER`, `HR`, `SELECT`, `TEXT`, `TEXT_AREA`, `TEXT_INPUT`
          */
-        htmlAttributes: {
+        htmlAttributes?: {
             /**
              * The minimum numeric value
              *
