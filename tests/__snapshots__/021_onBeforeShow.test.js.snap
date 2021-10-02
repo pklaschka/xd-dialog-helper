@@ -11,24 +11,29 @@ exports[`options.onBeforeShow should get passed the correct parameters 1`] = `
 
         <style>
           
-    form {
+    #dialog-dialog form {
         width: 360px;
     }
 
-    div, main &gt; *, label, input:not([type="checkbox"]), select, textarea {
+    #dialog-dialog div, 
+    #dialog-dialog main &gt; *, 
+    #dialog-dialog label, 
+    #dialog-dialog input:not([type="checkbox"]), 
+    #dialog-dialog select, 
+    #dialog-dialog textarea {
         display: block;
         width: 100%;
     }
 		
-    main &gt; * + * {
+    #dialog-dialog main &gt; * + * {
         margin-top: 1em;
     }
 		
-    .checkbox-wrapper {
+    #dialog-dialog .checkbox-wrapper {
         display: flex;
     }
 		
-    .checkbox-wrapper span, .checkbox-wrapper input{
+    #dialog-dialog .checkbox-wrapper span, #dialog-dialog .checkbox-wrapper input{
         display: block;
         width: auto;
     }

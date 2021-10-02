@@ -14,24 +14,29 @@ async function showDialog(id, title, contents = [], options = {}) {
     dialog.id = `${id}-dialog`;
     dialog.innerHTML = `
 <style>
-    form {
+    #${id}-dialog form {
         width: ${options.width || 360}px;
     }
 
-    div, main > *, label, input:not([type="checkbox"]), select, textarea {
+    #${id}-dialog div, 
+    #${id}-dialog main > *, 
+    #${id}-dialog label, 
+    #${id}-dialog input:not([type="checkbox"]), 
+    #${id}-dialog select, 
+    #${id}-dialog textarea {
         display: block;
         width: 100%;
     }
 		
-    main > * + * {
+    #${id}-dialog main > * + * {
         margin-top: 1em;
     }
 		
-    .checkbox-wrapper {
+    #${id}-dialog .checkbox-wrapper {
         display: flex;
     }
 		
-    .checkbox-wrapper span, .checkbox-wrapper input{
+    #${id}-dialog .checkbox-wrapper span, #${id}-dialog .checkbox-wrapper input{
         display: block;
         width: auto;
     }
@@ -122,7 +127,10 @@ async function showDialog(id, title, contents = [], options = {}) {
     elements.push(...deepElements);
 
     // Actually show the dialog ...
-    document.body.innerHTML = '';
+    const prevDialog = document.getElementById(`${id}-dialog`);
+
+    if (prevDialog) prevDialog.remove();
+
     document.body.appendChild(dialog);
 
     if (options.onBeforeShow)
@@ -142,5 +150,5 @@ async function showDialog(id, title, contents = [], options = {}) {
 module.exports = {
     types,
     showDialog,
-    ...types // Deprecated, for backwards-compatibility. TODO: Remove for the version v1.1
+    ...types // Deprecated, for backwards-compatibility. TODO: Remove for the version v2
 };
